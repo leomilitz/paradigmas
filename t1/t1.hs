@@ -61,3 +61,8 @@ firstName str = takeWhile (/= ' ') str
 
 isInt :: String -> Bool
 isInt str = length (filter isDigit str) > 0
+
+-- 8.
+
+lastName :: String -> String
+lastName str = filter (/= ' ') (dropWhile (/= ' ') str)
