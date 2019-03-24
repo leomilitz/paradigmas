@@ -1,4 +1,12 @@
 :q
+putHyphen "Leonardo Militz"
+putHyphen "Leonardo Militz"
+noVowelsCL "Leonardo Militz"
+noVowelCL "Leonardo Militz"
+noVowelSL "Leonardo Militz"
+noVowels "Leonardo Militz"
+:load t1.hs
+:q
 htmlListItems ["Teste", " ", "", "teste2"]
 htmlListItemsCL ["Teste", " ", "", "teste2"]
 htmlListItemsSL ["Teste", " ", "", "teste2"]
