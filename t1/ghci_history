@@ -1,0 +1,8 @@
+:q
+isVowel 'B'
+isVowel 'A'
+isVowel 'b'
+isVowel 'a'
+:load t1.hs
+:load t1.s
+:q
