@@ -1,4 +1,11 @@
 :q
+htmlListItems ["Teste", " ", "", "teste2"]
+htmlListItemsCL ["Teste", " ", "", "teste2"]
+htmlListItemsSL ["Teste", " ", "", "teste2"]
+:load t1.hs
+addComma ["Teste", " ", "", "teste2"]
+:load t1.hs
+:q
 isVowel 'B'
 isVowel 'A'
 isVowel 'b'
