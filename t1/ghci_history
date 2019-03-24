@@ -1,4 +1,20 @@
 :q
+:t putHyphen
+putHyphen "teste "
+:load t1.hs
+noVowelsCL "Leonardo Militz"
+:load t1.hs
+:load t1.hs
+putHyphen "teste "
+:load t1.hs
+:q
+putHyphen "Leo Militz"
+putHyphen2 "Leo Militz"
+:load t1.hs
+putHyphen2 "Leo Militz"
+putHyphen "Leo Militz"
+:load t1.hs
+:q
 putHyphen "Leonardo Militz"
 putHyphen "Leonardo Militz"
 noVowelsCL "Leonardo Militz"
