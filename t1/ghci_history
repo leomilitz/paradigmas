@@ -1,4 +1,16 @@
 :q
+limitTen ["palavras","paralelas","pedal","paralelepipedo"]
+:load t1.hs
+:load t1.hs
+limitTen ["palavras","paralelas","pedal","paralelepipedo"]
+:load t1.hs
+limitTen "palavras"
+limitTen ["palavras","paralelas","pedal","paralelepipedo"]
+:load t1.hs
+take 10 "Leonardo Militz"
+:load t1.hs
+:load t1.hs
+:q
 betterEncodeName "Leunardo Mulutz"
 betterEncodeName "Badtz Maru"
 betterEncodeName "ANDERSON SILVA"

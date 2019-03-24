@@ -103,3 +103,8 @@ betterEncodeName2 c
     | c == 'o' = "1"
     | c == 'u' = "00"
     | otherwise = [c]
+
+-- 12. 
+
+limitTen :: [String] -> [String]
+limitTen list = map (take 10) (map (++ "..........") list)
