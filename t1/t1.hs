@@ -56,3 +56,8 @@ putHyphen2Aux c = if c /= ' ' then '-' else c
 
 firstName :: String -> String
 firstName str = takeWhile (/= ' ') str
+
+-- 7. 
+
+isInt :: String -> Bool
+isInt str = length (filter isDigit str) > 0

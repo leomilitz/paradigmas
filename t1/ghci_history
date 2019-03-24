@@ -1,4 +1,10 @@
 :q
+isInt "123124"
+isInt ""
+isInt "Leonardo Militz9"
+isInt "Leonardo Militz"
+:load t1.hs
+:q
 firstName "Leonardo Militz"
 :load t1.hs
 :q
