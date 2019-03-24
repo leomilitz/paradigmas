@@ -66,3 +66,8 @@ isInt str = length (filter isDigit str) > 0
 
 lastName :: String -> String
 lastName str = filter (/= ' ') (dropWhile (/= ' ') str)
+
+-- 9.
+
+userName :: String -> String
+userName name = map toLower ([head name] ++ lastName name) 

@@ -1,4 +1,11 @@
 :q
+userName "Amanda Cavalcanti"
+userName "Leonardo Militz"
+:load t1.hs
+:load t1.hs
+:load t1.hs
+:load t1.hs
+:q
 lastName "Leonardo Militz"
 :load t1.hs
 :load t1.hs
