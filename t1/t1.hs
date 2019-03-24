@@ -87,3 +87,19 @@ encodeName2 c
     | c == 'o' = '1'
     | c == 'u' = '0'
     | otherwise = c
+
+-- 11. Escreva uma função betterEncodeName :: String -> String que substitua 
+-- vogais em uma string, conforme este esquema:
+-- a = 4, e = 3, i = 1, o = 0, u = 00.
+
+betterEncodeName :: String -> String
+betterEncodeName str = concatMap betterEncodeName2 (map toLower str)
+
+betterEncodeName2 :: Char -> String
+betterEncodeName2 c
+    | c == 'a' = "4" 
+    | c == 'e' = "3"
+    | c == 'i' = "2"
+    | c == 'o' = "1"
+    | c == 'u' = "00"
+    | otherwise = [c]

@@ -1,4 +1,10 @@
 :q
+betterEncodeName "Leunardo Mulutz"
+betterEncodeName "Badtz Maru"
+betterEncodeName "ANDERSON SILVA"
+betterEncodeName "Anderson Silva"
+:load t1.hs
+:q
 :Q
 encodeName "ANDERSON SILVA"
 encodeName "Badtz Maru"
