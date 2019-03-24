@@ -47,7 +47,7 @@ putHyphen string = map (\c -> if c /= ' ' then '-' else c) string
 -- Sem lambda
 
 putHyphen2 :: String -> String
-putHyphen2 string =  map botaTracosAux string
+putHyphen2 string =  map putHyphen2Aux string
 
 putHyphen2Aux :: Char -> Char
 putHyphen2Aux c = if c /= ' ' then '-' else c

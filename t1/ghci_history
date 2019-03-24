@@ -1,4 +1,14 @@
 :q
+putHyphen2 "Leo Militz"
+:load t1.hs
+:load t1.hs
+:q
+putHyphen "Leo Militz"
+:load t1.hs
+:q
+:t putHyphen
+:load t1.hs
+:q
 :t putHyphen
 putHyphen "teste "
 :load t1.hs
