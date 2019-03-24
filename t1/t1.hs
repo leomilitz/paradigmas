@@ -51,3 +51,8 @@ putHyphen2 string =  map putHyphen2Aux string
 
 putHyphen2Aux :: Char -> Char
 putHyphen2Aux c = if c /= ' ' then '-' else c
+
+-- 6.
+
+firstName :: String -> String
+firstName str = takeWhile (/= ' ') str
