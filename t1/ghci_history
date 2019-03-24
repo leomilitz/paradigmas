@@ -1,4 +1,10 @@
 :q
+:Q
+encodeName "ANDERSON SILVA"
+encodeName "Badtz Maru"
+encodeName "Anderson Silva"
+:load t1.hs
+:q
 userName "Amanda Cavalcanti"
 userName "Leonardo Militz"
 :load t1.hs
