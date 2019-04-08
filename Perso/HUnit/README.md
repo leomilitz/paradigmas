@@ -48,7 +48,47 @@ expected: [11,12,13,14,15,16,17,18,19,20]
  but got: [20,12,13,14,15,16,17,18,19,20]
 Cases: 1  Tried: 1  Errors: 0  Failures: 1
 ```
+## Exercício 2
+**_Código:_**
+```haskell
+multN :: Int -> [Int] -> [Int]
+multN n lista = [x*n | x <- lista]
+```
+**_Teste Correto:_**
+```
+test2 = TestCase (assertEqual "multN 2 [1..4]" 
+			      (multN 2 [1..4]) 
+			         [2, 4, 6, 8])
+```
+**_Resultado correto:_**
+```
+Prelude Test.HUnit> runTestTT test2
 
+Cases: 1  Tried: 0  Errors: 0  Failures: 0
+                                          
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+Counts {cases = 1, tried = 1, errors = 0, failures = 0}
+```
+
+**_Teste falho:_**
+```
+test2 = TestCase (assertEqual "multN 2 [1..4]" 
+			      (multN 2 [1..4]) 
+			         [10, 4, 6, 8])
+```
+**_Resultado falho:_**
+```
+Prelude Test.HUnit> runTestTT test2
+
+Cases: 1  Tried: 0  Errors: 0  Failures: 0
+                                          
+### Failure:
+<interactive>:23
+multN 2 [1..4]
+expected: [2,4,6,8]
+ but got: [10,4,6,8]
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+```
 
 
 
