@@ -4,6 +4,8 @@ Os testes serão realizados com o primeiro trabalho da disciplina, e com os exer
 
 ## Objetivos
 
-[] - 1 ao 5
+- [ ] 1 ao 5
+- [ ] 6 ao 10
+- [ ] 11 ao 15
 
 
