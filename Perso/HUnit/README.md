@@ -1,11 +1,55 @@
 # Testes com HUnit
 
-Os testes serão realizados com o primeiro trabalho da disciplina, e com os exercícios de _list comprehension_.
+Os testes serão realizados com o primeiro trabalho da disciplina, e com os exercícios de _list comprehension_. Aqui será mostrado o trecho do código, o trecho de teste, e as _outputs_.
 
-## prog3.hs
+# prog3.hs
+###### exercícios de _list comprehension_
+## Exercício 1
 
-*Exercício 1:*
+**_Código:_**
 ```haskell
 add10toall :: [Int] -> [Int]
 add10toall list = [x + 10| x <- list]
 ```
+
+**_Teste correto:_**
+```
+Prelude Test.HUnit> 
+test1 = TestCase (assertEqual "add10toall [1..10]" 
+                              (add10toall [1..10]) 
+                              [11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
+```
+**_Resultado correto:_**
+```
+Prelude Test.HUnit> runTestTT test1
+
+Cases: 1  Tried: 0  Errors: 0  Failures: 0
+                                          
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+Counts {cases = 1, tried = 1, errors = 0, failures = 0}
+```
+**_Teste falho:_**
+```
+Prelude Test.HUnit> 
+test1 = TestCase (assertEqual "add10toall [1..10]" 
+                              (add10toall [1..10]) 
+                              [20, 12, 13, 14, 15, 16, 17, 18, 19, 20])
+```
+**_Resultado falho:_**
+```
+Prelude Test.HUnit> runTestTT test1
+
+Cases: 1  Tried: 0  Errors: 0  Failures: 0
+                                          
+### Failure:
+<interactive>:17
+add10toall [1..10]
+expected: [11,12,13,14,15,16,17,18,19,20]
+ but got: [20,12,13,14,15,16,17,18,19,20]
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+```
+
+
+
+
+
