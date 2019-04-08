@@ -4,7 +4,7 @@ Os testes serão realizados com o primeiro trabalho da disciplina, e com os exer
 
 ## Organização da atividade
 
-Existem as pastas **prog3** e **t1**. Dentro delas, estarão listados os testes em exercícios, de 5 em 5.
+Dentro da pasta de documentação, existem as pastas **prog3** e **t1**. Dentro delas, estarão listados os testes em exercícios, de 5 em 5.
 
 # Objetivos
 
