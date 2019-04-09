@@ -11,6 +11,8 @@ type Circle  = (Point,Float)
 rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
+raimbowPalette :: Int -> [(Int,Int,Int)]
+
 purplePalette :: Int -> [(Int,Int,Int)]
 purplePalette n = [(80+i*4 , 0, 80+i*4) | i <- [0..n] ]
 
@@ -53,19 +55,33 @@ genCase1 :: IO ()
 genCase1 = do
     writeFile "case1.svg" $ svgstrs1
     where svgstrs1 = svgBegin width height ++ svgfigs ++ svgEnd
-          svgfigs = svgElements svgRect rects (map svgStyle palette)
-          rects = genRectsInLine lrects crects --linhas colunas
-          lrects = 5
-          crects = 10
-          palette = purplePalette (lrects*crects)
+          svgfigs  = svgElements svgRect rects (map svgStyle palette)
+          rects    = genRectsInLine lrects crects --linhas colunas
+          lrects   = 5
+          crects   = 10
+          palette  = purplePalette (lrects*crects)
           (width,height) = (1500,500)
 
 -----------------------------------------------------------------------------
 --                                Caso 2
 -----------------------------------------------------------------------------
 
---genCase2 :: IO()
---genCase2 = do
+genCircles1 :: Int -> Float -> [Circle]
+genCircles1 n r = [((xc + radium*cos m, yc + radium*sin m), r) | m <- [0,20..360]]
+    where xc = 90
+          yc = 80
+          radium = 40 
+
+genCase2 :: IO ()
+genCase2 = do
+    writeFile "case2.svg" $ svgstrs2
+    where svgstrs2 = svgBegin width height ++ svgfigs ++ svgEnd
+          svgfigs  = svgElements svgCircle circles (map svgStyle palette)
+          circles  = genCircles1 n radium
+          radium   = 10
+          n        = 11
+          palette  = rgbPalette n
+          (width,height) = (1500,500)
 
 -----------------------------------------------------------------------------
 --                                Caso 3
