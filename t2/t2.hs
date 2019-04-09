@@ -1,0 +1,78 @@
+import Text.Printf
+
+type Point   = (Float,Float)
+type Rect    = (Point,Float,Float)
+type Circle  = (Point,Float)
+
+-------------------------------------------------------------------------------
+-- Paletas
+-------------------------------------------------------------------------------
+
+rgbPalette :: Int -> [(Int,Int,Int)]
+rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
+
+purplePalette :: Int -> [(Int,Int,Int)]
+purplePalette n = [(80+i*(toInt (n*0.8)),0,80+i*(toInt (n*0.8))) | i <- [0..n] ]
+
+-------------------------------------------------------------------------------
+--  SVG
+-------------------------------------------------------------------------------
+
+
+svgBegin :: Float -> Float -> String
+svgBegin width height = printf "<svg width='%.2f' height='%.2f' xmlns='http://www.w3.org/2000/svg'>\n" width height
+
+svgEnd :: String
+svgEnd = "</svg>"
+
+svgRect :: Rect -> String -> String 
+svgRect ((x,y),w,h) style = 
+  printf "<rect x='%.3f' y='%.3f' width='%.2f' height='%.2f' style='%s' />\n" x y w h style
+
+svgStyle :: (Int,Int,Int) -> String
+svgStyle (r,g,b) = printf "fill:rgb(%d,%d,%d); mix-blend-mode: screen;" r g b
+
+svgElements :: (a -> String -> String) -> [a] -> [String] -> String
+svgElements func elements styles = concat $ zipWith func elements styles
+
+
+-----------------------------------------------------------------------------
+--                                Caso 1
+-----------------------------------------------------------------------------
+
+genRectsInLine :: Int -> Int -> [Rect]
+genRectsInLine l c = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l-1)]]
+    where gap   = 10
+          (w,h) = (50,50)
+
+genCase1 :: IO ()
+genCase1 = do
+    writeFile "case1.svg" $ svgstrs1
+    where svgstrs1 = svgBegin width height ++ svgfigs ++ svgEnd
+          svgfigs = svgElements svgRect rects (map svgStyle palette)
+          rects = genRectsInLine lrects crects --linhas colunas
+          lrects = 5
+          crects = 10
+          palette = purplePalette (lrects*crects)
+          (width,height) = (1500,500)
+
+-----------------------------------------------------------------------------
+--                                Caso 2
+-----------------------------------------------------------------------------
+
+--genCase2 :: IO()
+--genCase2 = do
+
+-----------------------------------------------------------------------------
+--                                Caso 3
+-----------------------------------------------------------------------------
+
+--genCase3 :: IO()
+--genCase3 = do
+
+-----------------------------------------------------------------------------
+--                                Caso 4
+-----------------------------------------------------------------------------
+
+--genCase4 :: IO()
+--genCase4 = do
