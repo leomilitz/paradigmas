@@ -9,3 +9,6 @@
 - [ ] Caso 2 
 - [ ] Caso 3
 - [ ] Caso 4
+
+## Créditos
+[AndreaInfUFSM](https://github.com/AndreaInfUFSM)
