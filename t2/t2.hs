@@ -12,7 +12,7 @@ rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
 purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n = [(80+i*(toInt (n*0.8)),0,80+i*(toInt (n*0.8))) | i <- [0..n] ]
+purplePalette n = [(80+i*4 , 0, 80+i*4) | i <- [0..n] ]
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -27,7 +27,11 @@ svgEnd = "</svg>"
 
 svgRect :: Rect -> String -> String 
 svgRect ((x,y),w,h) style = 
-  printf "<rect x='%.3f' y='%.3f' width='%.2f' height='%.2f' style='%s' />\n" x y w h style
+    printf "<rect x='%.3f' y='%.3f' width='%.2f' height='%.2f' style='%s' />\n" x y w h style
+
+svgCircle :: Circle -> String -> String
+svgCircle ((x,y), r) style =
+    printf "<circle cx='%.3f' cy='%.3f' r='%.3f' style='%s' />\n" x y r style
 
 svgStyle :: (Int,Int,Int) -> String
 svgStyle (r,g,b) = printf "fill:rgb(%d,%d,%d); mix-blend-mode: screen;" r g b
