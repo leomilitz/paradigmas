@@ -1,0 +1,97 @@
+:q
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+cycle 2 [(255,0,0), (0,255,0), (0,0,255)]
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+test 4 6 10 50 50
+let test l c gap w h = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+test 4 6 10 50 50
+let test l c gap w h = [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+          (w,h) = (50,50)
+    where gap   = 10
+          (w,h) = (50,50)genRectsInLine l c = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+    where gap   = 10
+genRectsInLine l c = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+let teste l c = [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+let teste l c = [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l)]]
+:load t2.hs
+concat [[1,2,3],[1,2,3]]
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase1
+:load t2.hs
+genCase1
+genCase1
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.h
+:load t2.h
+:load t2.hs
+:load t2.hs
+:load t2.hs
