@@ -1,4 +1,83 @@
 :q
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+degreeToRad 0
+genCase2
+genCase2
+:load t2.hs
+degreeToRad 360
+degreeToRad 15
+degreeToRad 1
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+:load t2.hs
+:load t2.hs
+import -v System.Random
+import System.Random
+-v
+:load t2.hs
+:load t2.hs
+:q
+:load t2.hs
+:q
 clear
 cls
 cycle [1,2,3]
@@ -19,82 +98,3 @@ genCase2
 :load t2.hs
 genCase2
 :load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-genCase1
-:load t2.hs
-genCase1
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:q
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-cycle 2 [(255,0,0), (0,255,0), (0,0,255)]
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-genCase1

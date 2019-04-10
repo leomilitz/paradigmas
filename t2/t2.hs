@@ -12,6 +12,7 @@ rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
 raimbowPalette :: Int -> [(Int,Int,Int)]
+raimbowPalette n = take n $ cycle (concat [[(r,g,b) | r <- [255,140..0], g <- [0,140..255]] | b <- [0, 140..255]])
 
 purplePalette :: Int -> [(Int,Int,Int)]
 purplePalette n = [(80+i*4 , 0, 80+i*4) | i <- [0..n] ]
@@ -66,11 +67,14 @@ genCase1 = do
 --                                Caso 2
 -----------------------------------------------------------------------------
 
+degreeToRad :: Float -> Float
+degreeToRad n = n*pi/180
+
 genCircles1 :: Int -> Float -> [Circle]
-genCircles1 n r = [((xc + radium*cos m, yc + radium*sin m), r) | m <- [0,20..360]]
-    where xc = 90
+genCircles1 n r = [((xc + radium*cos m, yc + radium*sin m), r) | m <- [degreeToRad 0, degreeToRad 30.. degreeToRad 360]]
+    where xc = 80
           yc = 80
-          radium = 40 
+          radium = 50 
 
 genCase2 :: IO ()
 genCase2 = do
@@ -79,8 +83,8 @@ genCase2 = do
           svgfigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = genCircles1 n radium
           radium   = 10
-          n        = 11
-          palette  = rgbPalette n
+          n        = 12
+          palette  = raimbowPalette n
           (width,height) = (1500,500)
 
 -----------------------------------------------------------------------------
@@ -94,5 +98,3 @@ genCase2 = do
 --                                Caso 4
 -----------------------------------------------------------------------------
 
---genCase4 :: IO()
---genCase4 = do
