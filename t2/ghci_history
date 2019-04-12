@@ -1,100 +1,100 @@
 :q
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-degreeToRad 0
-genCase2
-genCase2
-:load t2.hs
-degreeToRad 360
-degreeToRad 15
-degreeToRad 1
+genCase3
 :load t2.hs
 :load t2.hs
 :load t2.hs
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
-:load t2.hs
-genCase2
+genCase3
 :load t2.hs
 :load t2.hs
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
-:load t2.hs
-genCase2
+genCase3
 :load t2.hs
 :load t2.hs
 :load t2.hs
-import -v System.Random
-import System.Random
--v
+genCase3
+genCase3
+:load t2.hs
+genCase3
 :load t2.hs
 :load t2.hs
-:q
+genCase3
+genCase3
 :load t2.hs
-:q
-clear
-cls
-cycle [1,2,3]
-cycle 4
-genCase2
+genCase3
 :load t2.hs
-genCase2
+genCase3
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
-genCase2
 :load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase3
+genCase3
+:load t2.hs
+genCase3
+genCase3
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3
+:load t2.hs
+genCase3

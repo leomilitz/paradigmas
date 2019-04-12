@@ -11,11 +11,8 @@ type Circle  = (Point,Float)
 rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
-raimbowPalette :: Int -> [(Int,Int,Int)]
-raimbowPalette n = take n $ cycle (concat [[(r,g,b) | r <- [255,140..0], g <- [0,140..255]] | b <- [0, 140..255]])
-
 purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n = [(80+i*4 , 0, 80+i*4) | i <- [0..n] ]
+purplePalette n = [(80+i*4, 0, 80+i*4) | i <- [0..n] ] -- floor round
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -84,15 +81,31 @@ genCase2 = do
           circles  = genCircles1 n radium
           radium   = 10
           n        = 12
-          palette  = raimbowPalette n
+          palette  = rgbPalette n
           (width,height) = (1500,500)
 
 -----------------------------------------------------------------------------
 --                                Caso 3
 -----------------------------------------------------------------------------
 
---genCase3 :: IO()
---genCase3 = do
+gen3Circles :: Float -> Float -> Float -> [Circle]
+gen3Circles xc yc r = [if m /= 0.5 then ((xc + m*r,yc), r) else ((xc + m*r,yc - r), r) | m <- [0, 0.5, 1]]
+
+gen3CirclesMatrix :: Int -> Int -> Float -> [Circle]
+gen3CirclesMatrix c l r = concat [(concat [gen3Circles (pos*gap) (gap*m) r | pos <- [1.. fromIntegral c]]) | m <- [1..fromIntegral l]]
+    where gap = r*3
+
+genCase3 :: IO()
+genCase3 = do
+    writeFile "case3.svg" $ svgstrs3
+    where svgstrs3 = svgBegin width height ++ svgFigs ++ svgEnd
+          svgFigs  = svgElements svgCircle circles (map svgStyle palette)
+          circles  = gen3CirclesMatrix c l radium
+          radium   = 50
+          l        = 2
+          c        = 6
+          palette  = rgbPalette (l*c*3)
+          (width, height) = (1500, 500)
 
 -----------------------------------------------------------------------------
 --                                Caso 4
