@@ -11,6 +11,15 @@ type Circle  = (Point,Float)
 rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
+redPalette :: Int -> [(Int,Int,Int)]
+redPalette n = [(80+i*n, 0, 0) | i <- [0..n] ] 
+
+greenPalette :: Int -> [(Int,Int,Int)]
+greenPalette n = [(0, 80+i*4, 0) | i <- [0..n] ] 
+
+bluePalette :: Int -> [(Int,Int,Int)]
+bluePalette n = [(0, 0, 80+i*4) | i <- [0..n] ] 
+
 purplePalette :: Int -> [(Int,Int,Int)]
 purplePalette n = [(80+i*4, 0, 80+i*4) | i <- [0..n] ] -- floor round
 
@@ -95,15 +104,15 @@ gen3CirclesMatrix :: Int -> Int -> Float -> [Circle]
 gen3CirclesMatrix c l r = concat [(concat [gen3Circles (pos*gap) (gap*m) r | pos <- [1.. fromIntegral c]]) | m <- [1..fromIntegral l]]
     where gap = r*3
 
-genCase3 :: IO()
+genCase3 :: IO ()
 genCase3 = do
     writeFile "case3.svg" $ svgstrs3
     where svgstrs3 = svgBegin width height ++ svgFigs ++ svgEnd
           svgFigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = gen3CirclesMatrix c l radium
-          radium   = 50
           l        = 2
           c        = 6
+          radium   = 50
           palette  = rgbPalette (l*c*3)
           (width, height) = (1500, 500)
 
@@ -111,3 +120,18 @@ genCase3 = do
 --                                Caso 4
 -----------------------------------------------------------------------------
 
+circleSinusoid :: Int -> Float -> [Circle]
+circleSinusoid n r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*40))), r) | y <- [0..fromIntegral(n-1)]]
+    where xc = 50
+          yc = 100
+
+genCase4 :: IO ()
+genCase4 = do
+    writeFile "case4.svg" $ svgstrs4
+    where svgstrs4 = svgBegin width height ++ svgFigs ++ svgEnd
+          svgFigs  = svgElements svgCircle circles (map svgStyle palette)
+          circles  = circleSinusoid c radium
+          c        = 20
+          radium   = 20
+          palette  = redPalette c
+          (width, height) = (1500, 500)
