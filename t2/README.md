@@ -7,7 +7,7 @@
 
 - [x] Caso 1
 - [ ] Caso 2 
-- [ ] Caso 3
+- [x] Caso 3
 - [ ] Caso 4
 
 ## Créditos
