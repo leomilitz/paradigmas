@@ -6,7 +6,7 @@
 ## Progresso
 
 - [x] Caso 1
-- [ ] Caso 2 
+- [x] Caso 2 (parcialmente completo, preciso achar uma forma de fazer as cores do arco-iris sem usar hardcoding)
 - [x] Caso 3
 - [x] Caso 4
 
