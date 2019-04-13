@@ -1,27 +1,36 @@
 import Text.Printf
 
+-------------------------------------------------------------------------------
+-- Types
+-------------------------------------------------------------------------------
+
 type Point   = (Float,Float)
 type Rect    = (Point,Float,Float)
 type Circle  = (Point,Float)
 
 -------------------------------------------------------------------------------
--- Paletas
+-- Palettes
 -------------------------------------------------------------------------------
 
 rgbPalette :: Int -> [(Int,Int,Int)]
-rgbPalette n = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
+rgbPalette n     = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
+
+raimbowPalette :: Int -> [(Int,Int,Int)]
+raimbowPalette n = take n $ cycle [(255,0,0), (255,130,0), (249,255,0), (119,255,0), 
+                                   (0,255,10), (0,255,140), (0,239,255), (0,109,255), 
+                                   (20,0,255), (150,0,255), (255,0,229), (255,0,99)]
 
 redPalette :: Int -> [(Int,Int,Int)]
-redPalette n = [(80+i*n, 0, 0) | i <- [0..n] ] 
+redPalette n     = [(80+i*4, 0, 0) | i <- [0..n]] 
 
 greenPalette :: Int -> [(Int,Int,Int)]
-greenPalette n = [(0, 80+i*4, 0) | i <- [0..n] ] 
+greenPalette n   = [(0, 80+i*4, 0) | i <- [0..n]] 
 
 bluePalette :: Int -> [(Int,Int,Int)]
-bluePalette n = [(0, 0, 80+i*4) | i <- [0..n] ] 
+bluePalette n    = [(0, 0, 80+i*4) | i <- [0..n]] 
 
 purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n = [(80 +(i*n `div` n*3), 0, 80 + (i*n `div` n*3)) | i <- [0..n] ] -- floor round
+purplePalette n  = [(80 +(i*n `div` n*3), 0, 80 + (i*n `div` n*3)) | i <- [0..n]]
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -50,7 +59,7 @@ svgElements func elements styles = concat $ zipWith func elements styles
 
 
 -----------------------------------------------------------------------------
---                                Caso 1
+--                                Case 1
 -----------------------------------------------------------------------------
 
 genRectsInLine :: Int -> Int -> [Rect]
@@ -70,7 +79,7 @@ genCase1 = do
           (width,height) = (1500,500)
 
 -----------------------------------------------------------------------------
---                                Caso 2
+--                                Case 2
 -----------------------------------------------------------------------------
 
 degreeToRad :: Float -> Float
@@ -79,10 +88,10 @@ degreeToRad n = n*pi/180
 genCircles1 :: Int -> Float -> [Circle]
 genCircles1 n r = [((xc + radium*(cos (degreeToRad (m*angle))), yc + radium*(sin (degreeToRad (m*angle)))), r) | m <- [0..fromIntegral (n-1)]]
     where xc     = w / 2
-          yc     = h / 2.5
+          yc     = h / 2
           radium = fromIntegral(n*4)
           angle  = fromIntegral (360 `div` n)
-          (w,h)  = (1500,500)
+          (w,h)  = (fromIntegral (10*n),fromIntegral (12*n))
 
 genCase2 :: IO ()
 genCase2 = do
@@ -92,11 +101,11 @@ genCase2 = do
           circles  = genCircles1 n radium
           radium   = 10
           n        = 12
-          palette  = rgbPalette n
-          (width,height) = (1500,500)
+          palette  = raimbowPalette n
+          (width,height) = (fromIntegral (10*n),fromIntegral (12*n))
 
 -----------------------------------------------------------------------------
---                                Caso 3
+--                                Case 3
 -----------------------------------------------------------------------------
 
 gen3Circles :: Float -> Float -> Float -> [Circle]
@@ -112,14 +121,15 @@ genCase3 = do
     where svgstrs3 = svgBegin width height ++ svgFigs ++ svgEnd
           svgFigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = gen3CirclesMatrix c l radium
-          l        = 2
-          c        = 6
+          l        = 4
+          c        = 10
           radium   = 50
+          radiumCopy = 50
           palette  = rgbPalette (l*c*3)
-          (width, height) = (1500, 500)
+          (width, height) = (fromIntegral (radiumCopy*4*c),fromIntegral (radiumCopy*4*l))
 
 -----------------------------------------------------------------------------
---                                Caso 4
+--                                Case 4
 -----------------------------------------------------------------------------
 
 circleSinusoid :: Int -> String -> Float -> [Circle]
@@ -134,16 +144,17 @@ circleSinusoid n color r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*angle
 genCase4 :: IO ()
 genCase4 = do
     writeFile "case4.svg" $ svgstrs4
-    where svgstrs4 = svgBegin width height ++ svgFigsR ++ svgFigsG ++ svgFigsB ++ svgEnd
+    where svgstrs4  = svgBegin width height ++ svgFigsR ++ svgFigsG ++ svgFigsB ++ svgEnd
           svgFigsR  = svgElements svgCircle circlesR (map svgStyle paletteR)
           svgFigsG  = svgElements svgCircle circlesG (map svgStyle paletteG)
           svgFigsB  = svgElements svgCircle circlesB (map svgStyle paletteB)
           circlesR  = circleSinusoid c "red" radium -- red == 1
           circlesG  = circleSinusoid c "green" radium
           circlesB  = circleSinusoid c "blue" radium
-          c        = 12
-          radium   = 20
+          c         = 30
+          radium    = 20
+          radiumCopy= 20
           paletteR  = redPalette c
           paletteG  = greenPalette c
           paletteB  = bluePalette c
-          (width, height) = (1500, 500)
+          (width, height) = (fromIntegral  c*radiumCopy*2, 400)
