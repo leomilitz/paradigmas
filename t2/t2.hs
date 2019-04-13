@@ -122,13 +122,13 @@ genCase3 = do
 --                                Caso 4
 -----------------------------------------------------------------------------
 
-circleSinusoid :: Int -> Int -> Float -> [Circle]
+circleSinusoid :: Int -> String -> Float -> [Circle]
 circleSinusoid n color r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*angle))), r) | y <- [0..fromIntegral(n-1)]]
     where xc    = 50
           yc
-            | color == 1 = 100
-            | color == 2 = 200
-            | otherwise  = 300
+            | color == "red"   = 100
+            | color == "green" = 200
+            | otherwise        = 300
           angle = 40
 
 genCase4 :: IO ()
@@ -138,9 +138,9 @@ genCase4 = do
           svgFigsR  = svgElements svgCircle circlesR (map svgStyle paletteR)
           svgFigsG  = svgElements svgCircle circlesG (map svgStyle paletteG)
           svgFigsB  = svgElements svgCircle circlesB (map svgStyle paletteB)
-          circlesR  = circleSinusoid c 1 radium -- red == 1
-          circlesG  = circleSinusoid c 2 radium
-          circlesB  = circleSinusoid c 3 radium
+          circlesR  = circleSinusoid c "red" radium -- red == 1
+          circlesG  = circleSinusoid c "green" radium
+          circlesB  = circleSinusoid c "blue" radium
           c        = 12
           radium   = 20
           paletteR  = redPalette c
