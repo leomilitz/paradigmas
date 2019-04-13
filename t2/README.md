@@ -8,7 +8,7 @@
 - [x] Caso 1
 - [ ] Caso 2 
 - [x] Caso 3
-- [ ] Caso 4
+- [x] Caso 4
 
 ## Créditos
 [AndreaInfUFSM](https://github.com/AndreaInfUFSM)
