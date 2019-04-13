@@ -1,3 +1,10 @@
+-------------------------------------------------------
+-- Autor:        Leonardo Militz                     --
+-- Disciplina:   Paradigmas da Programação           --
+-- Professor:    Andrea Schwertner Charão            --
+-- Créditos:     Andrea Schwertner Charão            --
+-------------------------------------------------------
+
 import Text.Printf
 
 -------------------------------------------------------------------------------
@@ -65,18 +72,18 @@ svgElements func elements styles = concat $ zipWith func elements styles
 genRectsInLine :: Int -> Int -> [Rect]
 genRectsInLine l c = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l-1)]]
     where gap   = 10
-          (w,h) = (50,50)
+          (w,h) = (50,50) -- Lado e altura do retângulo
 
 genCase1 :: IO ()
 genCase1 = do
     writeFile "case1.svg" $ svgstrs1
     where svgstrs1 = svgBegin width height ++ svgfigs ++ svgEnd
           svgfigs  = svgElements svgRect rects (map svgStyle palette)
-          rects    = genRectsInLine lrects crects --linhas colunas
-          lrects   = 5
-          crects   = 12
-          palette  = purplePalette (lrects*crects)
-          (width,height) = (fromIntegral (60*crects), fromIntegral (70*lrects))
+          rects    = genRectsInLine l c
+          l        = 5  -- Quantidade de linhas da matriz
+          c        = 12 -- Quantidade de colunas da matriz
+          palette  = purplePalette (l*c)
+          (width,height) = (fromIntegral (60*c), fromIntegral (70*l))
 
 -----------------------------------------------------------------------------
 --                                Case 2
@@ -99,8 +106,8 @@ genCase2 = do
     where svgstrs2 = svgBegin width height ++ svgfigs ++ svgEnd
           svgfigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = genCircles1 n radium
-          radium   = 10
-          n        = 12
+          radium   = 10 -- Raio dos círculos menores
+          n        = 12 -- Número de círculos desejados
           palette  = raimbowPalette n
           (width,height) = (fromIntegral (10*n),fromIntegral (12*n))
 
@@ -121,10 +128,10 @@ genCase3 = do
     where svgstrs3 = svgBegin width height ++ svgFigs ++ svgEnd
           svgFigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = gen3CirclesMatrix c l radium
-          l        = 4
-          c        = 10
-          radium   = 50
-          radiumCopy = 50
+          l        = 4    --  Número de linhas da matriz desejado
+          c        = 10   -- Número de colunas da matriz desejado
+          radium   = 50   -- Raio de cada círculo
+          radiumCopy = 50 -- Cópia do raio de cada círculo, usado para não ter conflito de tipos ao definir o tamanho e largura da tela. 
           palette  = rgbPalette (l*c*3)
           (width, height) = (fromIntegral (radiumCopy*4*c),fromIntegral (radiumCopy*4*l))
 
@@ -148,12 +155,12 @@ genCase4 = do
           svgFigsR  = svgElements svgCircle circlesR (map svgStyle paletteR)
           svgFigsG  = svgElements svgCircle circlesG (map svgStyle paletteG)
           svgFigsB  = svgElements svgCircle circlesB (map svgStyle paletteB)
-          circlesR  = circleSinusoid c "red" radium -- red == 1
+          circlesR  = circleSinusoid c "red"   radium
           circlesG  = circleSinusoid c "green" radium
-          circlesB  = circleSinusoid c "blue" radium
-          c         = 30
-          radium    = 20
-          radiumCopy= 20
+          circlesB  = circleSinusoid c "blue"  radium
+          c         = 30 -- Quantidade  de círculos em cada senóide
+          radium    = 20 -- Raio de cada círculo da senóide
+          radiumCopy= 20 -- Cópia do raio de cada círculo da senóide, visando não acontecer conflito de tipos na definição da largura e altura da tela
           paletteR  = redPalette c
           paletteG  = greenPalette c
           paletteB  = bluePalette c
