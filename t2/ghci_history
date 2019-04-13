@@ -1,4 +1,48 @@
 :q
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase2
+:load t2.hs
+genCase2
+:load t2.hs
+:load t2.hs
+:load t2.hs
+:load t2.hs
+genCase3
+:load t2.hs
+:q
 genCase4
 :load t2.hs
 genCase4
@@ -54,47 +98,3 @@ genCase4
 :load t2.hs
 genCase4
 :load t2.hs
-genCase4
-:load t2.hs
-genCase4
-:load t2.hs
-genCase4
-:load t2.hs
-genCase4
-:load t2.hs
-genCase4
-genCase4
-:load t2.hs
-genCase4
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-:load t2.hs
-genCase3
-:load t2.hs
-:q
-genCase3
-:load t2.hs
-genCase3
-:load t2.hs
-genCase3
-:load t2.hs
-genCase3
-:load t2.hs
-genCase3
-:load t2.hs
-genCase3
-:load t2.hs
-genCase3

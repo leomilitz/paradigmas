@@ -1,14 +1,14 @@
-<svg width='150.00' height='150.00' xmlns='http://www.w3.org/2000/svg'>
-<circle cx='130.000' cy='80.000' r='10.000' style='fill:rgb(255,0,0); mix-blend-mode: screen;' />
-<circle cx='123.301' cy='105.000' r='10.000' style='fill:rgb(255,140,0); mix-blend-mode: screen;' />
-<circle cx='105.000' cy='123.301' r='10.000' style='fill:rgb(140,0,0); mix-blend-mode: screen;' />
-<circle cx='80.000' cy='130.000' r='10.000' style='fill:rgb(140,140,0); mix-blend-mode: screen;' />
-<circle cx='55.000' cy='123.301' r='10.000' style='fill:rgb(25,0,0); mix-blend-mode: screen;' />
-<circle cx='36.699' cy='105.000' r='10.000' style='fill:rgb(25,140,0); mix-blend-mode: screen;' />
-<circle cx='30.000' cy='80.000' r='10.000' style='fill:rgb(255,0,140); mix-blend-mode: screen;' />
-<circle cx='36.699' cy='55.000' r='10.000' style='fill:rgb(255,140,140); mix-blend-mode: screen;' />
-<circle cx='55.000' cy='36.699' r='10.000' style='fill:rgb(140,0,140); mix-blend-mode: screen;' />
-<circle cx='80.000' cy='30.000' r='10.000' style='fill:rgb(140,140,140); mix-blend-mode: screen;' />
-<circle cx='105.000' cy='36.699' r='10.000' style='fill:rgb(25,0,140); mix-blend-mode: screen;' />
-<circle cx='123.301' cy='55.000' r='10.000' style='fill:rgb(25,140,140); mix-blend-mode: screen;' />
+<svg width='1500.00' height='500.00' xmlns='http://www.w3.org/2000/svg'>
+<circle cx='798.000' cy='200.000' r='10.000' style='fill:rgb(255,0,0); mix-blend-mode: screen;' />
+<circle cx='791.569' cy='224.000' r='10.000' style='fill:rgb(0,255,0); mix-blend-mode: screen;' />
+<circle cx='774.000' cy='241.569' r='10.000' style='fill:rgb(0,0,255); mix-blend-mode: screen;' />
+<circle cx='750.000' cy='248.000' r='10.000' style='fill:rgb(255,0,0); mix-blend-mode: screen;' />
+<circle cx='726.000' cy='241.569' r='10.000' style='fill:rgb(0,255,0); mix-blend-mode: screen;' />
+<circle cx='708.431' cy='224.000' r='10.000' style='fill:rgb(0,0,255); mix-blend-mode: screen;' />
+<circle cx='702.000' cy='200.000' r='10.000' style='fill:rgb(255,0,0); mix-blend-mode: screen;' />
+<circle cx='708.431' cy='176.000' r='10.000' style='fill:rgb(0,255,0); mix-blend-mode: screen;' />
+<circle cx='726.000' cy='158.431' r='10.000' style='fill:rgb(0,0,255); mix-blend-mode: screen;' />
+<circle cx='750.000' cy='152.000' r='10.000' style='fill:rgb(255,0,0); mix-blend-mode: screen;' />
+<circle cx='774.000' cy='158.431' r='10.000' style='fill:rgb(0,255,0); mix-blend-mode: screen;' />
+<circle cx='791.569' cy='176.000' r='10.000' style='fill:rgb(0,0,255); mix-blend-mode: screen;' />
 </svg>

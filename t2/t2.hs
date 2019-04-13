@@ -21,7 +21,7 @@ bluePalette :: Int -> [(Int,Int,Int)]
 bluePalette n = [(0, 0, 80+i*4) | i <- [0..n] ] 
 
 purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n = [(80+i*4, 0, 80+i*4) | i <- [0..n] ] -- floor round
+purplePalette n = [(80+(i*n `div` 10), 0, 80 + (i*n `div` 10)) | i <- [0..n] ] -- floor round
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -77,10 +77,12 @@ degreeToRad :: Float -> Float
 degreeToRad n = n*pi/180
 
 genCircles1 :: Int -> Float -> [Circle]
-genCircles1 n r = [((xc + radium*cos m, yc + radium*sin m), r) | m <- [degreeToRad 0, degreeToRad 30.. degreeToRad 360]]
-    where xc = 80
-          yc = 80
-          radium = 50 
+genCircles1 n r = [((xc + radium*(cos (degreeToRad (m*angle))), yc + radium*(sin (degreeToRad (m*angle)))), r) | m <- [0..fromIntegral (n-1)]]
+    where xc     = w / 2
+          yc     = h / 2.5
+          radium = fromIntegral(n*4)
+          angle  = fromIntegral (360 `div` n)
+          (w,h)  = (1500,500)
 
 genCase2 :: IO ()
 genCase2 = do
