@@ -76,7 +76,7 @@ genCase1 = do
           lrects   = 5
           crects   = 12
           palette  = purplePalette (lrects*crects)
-          (width,height) = (1500,500)
+          (width,height) = (fromIntegral (60*crects), fromIntegral (70*lrects))
 
 -----------------------------------------------------------------------------
 --                                Case 2
