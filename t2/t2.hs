@@ -21,7 +21,7 @@ bluePalette :: Int -> [(Int,Int,Int)]
 bluePalette n = [(0, 0, 80+i*4) | i <- [0..n] ] 
 
 purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n = [(80+(i*n `div` 10), 0, 80 + (i*n `div` 10)) | i <- [0..n] ] -- floor round
+purplePalette n = [(80 +(i*n `div` n*3), 0, 80 + (i*n `div` n*3)) | i <- [0..n] ] -- floor round
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -65,7 +65,7 @@ genCase1 = do
           svgfigs  = svgElements svgRect rects (map svgStyle palette)
           rects    = genRectsInLine lrects crects --linhas colunas
           lrects   = 5
-          crects   = 10
+          crects   = 12
           palette  = purplePalette (lrects*crects)
           (width,height) = (1500,500)
 
@@ -122,18 +122,28 @@ genCase3 = do
 --                                Caso 4
 -----------------------------------------------------------------------------
 
-circleSinusoid :: Int -> Float -> [Circle]
-circleSinusoid n r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*40))), r) | y <- [0..fromIntegral(n-1)]]
-    where xc = 50
-          yc = 100
+circleSinusoid :: Int -> Int -> Float -> [Circle]
+circleSinusoid n color r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*angle))), r) | y <- [0..fromIntegral(n-1)]]
+    where xc    = 50
+          yc
+            | color == 1 = 100
+            | color == 2 = 200
+            | otherwise  = 300
+          angle = 40
 
 genCase4 :: IO ()
 genCase4 = do
     writeFile "case4.svg" $ svgstrs4
-    where svgstrs4 = svgBegin width height ++ svgFigs ++ svgEnd
-          svgFigs  = svgElements svgCircle circles (map svgStyle palette)
-          circles  = circleSinusoid c radium
-          c        = 20
+    where svgstrs4 = svgBegin width height ++ svgFigsR ++ svgFigsG ++ svgFigsB ++ svgEnd
+          svgFigsR  = svgElements svgCircle circlesR (map svgStyle paletteR)
+          svgFigsG  = svgElements svgCircle circlesG (map svgStyle paletteG)
+          svgFigsB  = svgElements svgCircle circlesB (map svgStyle paletteB)
+          circlesR  = circleSinusoid c 1 radium -- red == 1
+          circlesG  = circleSinusoid c 2 radium
+          circlesB  = circleSinusoid c 3 radium
+          c        = 12
           radium   = 20
-          palette  = redPalette c
+          paletteR  = redPalette c
+          paletteG  = greenPalette c
+          paletteB  = bluePalette c
           (width, height) = (1500, 500)
