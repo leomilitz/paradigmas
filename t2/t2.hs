@@ -147,7 +147,7 @@ genCase3 = do
 
 circleSinusoid :: Int -> String -> Float -> [Circle]
 circleSinusoid n color r = [((xc + 1.5*r*y, yc + 1.5*r*sin (degreeToRad (y*angle))), r) | y <- [0..fromIntegral(n-1)]]
-    where xc    = 50
+    where xc    = r
           yc
             | color == "red"   = 100
             | color == "green" = 200
@@ -170,4 +170,4 @@ genCase4 = do
           paletteR  = redPalette c
           paletteG  = greenPalette c
           paletteB  = bluePalette c
-          (width, height) = (fromIntegral  c*radiumCopy*2, 400)
+          (width, height) = (fromIntegral  c*radiumCopy*1.5 + radiumCopy, 400)
