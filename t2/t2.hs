@@ -30,7 +30,7 @@ raimbowPalette n = [(255-var*i, 0, var*i) | i <- [0..n `div` 3]] ++
 
 customPalette :: Int -> [(Int, Int, Int)]
 customPalette n  = [(255 - var*i, 0, var*i) | i <- [0..div n 2]] ++
-                   [(90, var*i, 255 - var*i) | i <- [0..div n 2]]
+                   [(0, var*i, 255 - var*i) | i <- [0..div n 2]]
     where var = 255 `div` n*2
 
 redPalette :: Int -> [(Int,Int,Int)]
@@ -89,7 +89,7 @@ genCase1 = do
           l        = 12  -- Quantidade de linhas da matriz
           c        = 20 -- Quantidade de colunas da matriz
           palette  = customPalette (l*c)
-          (width,height) = (fromIntegral (60*c), fromIntegral (70*l))
+          (width,height) = (fromIntegral (55*c), fromIntegral (60*l))
 
 -----------------------------------------------------------------------------
 --                                Case 2
