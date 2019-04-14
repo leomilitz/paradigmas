@@ -1,6 +1,6 @@
 -------------------------------------------------------
--- Aluno:        Leonardo Militz                     --
--- Disciplina:   Paradigmas da Programação - CC UFSM --
+-- Autor:        Leonardo Militz                     --
+-- Disciplina:   Paradigmas da Programação           --
 -- Professor:    Andrea Schwertner Charão            --
 -- Créditos:     Andrea Schwertner Charão            --
 -------------------------------------------------------
@@ -23,21 +23,27 @@ rgbPalette :: Int -> [(Int,Int,Int)]
 rgbPalette n     = take n $ cycle [(255,0,0),(0,255,0),(0,0,255)]
 
 raimbowPalette :: Int -> [(Int,Int,Int)]
-raimbowPalette n = take n $ cycle [(255,0,0), (255,130,0), (249,255,0), (119,255,0), 
-                                   (0,255,10), (0,255,140), (0,239,255), (0,109,255), 
-                                   (20,0,255), (150,0,255), (255,0,229), (255,0,99)]
+raimbowPalette n = [(255-var*i, 0, var*i) | i <- [0..n `div` 3]] ++ 
+                   [(0, var*i, 255-var*i) | i <- [0..n `div` 3]] ++
+                   [(var*i, 255 - var*i,0) | i <- [0..n `div` 3]]
+    where var = 255 `div` n*3
+
+customPalette :: Int -> [(Int, Int, Int)]
+customPalette n  = [(255 - var*i, 0, var*i) | i <- [0..div n 2]] ++
+                   [(90, var*i, 255 - var*i) | i <- [0..div n 2]]
+    where var = 255 `div` n*2
 
 redPalette :: Int -> [(Int,Int,Int)]
-redPalette n     = [(80+i*4, 0, 0) | i <- [0..n]] 
+redPalette n     = [(255 - var*i, 0, 0) | i <- [n, n-1..0]]
+    where var = 255 `div` n
 
 greenPalette :: Int -> [(Int,Int,Int)]
-greenPalette n   = [(0, 80+i*4, 0) | i <- [0..n]] 
+greenPalette n   = [(0, 255 - var*i, 0) | i <- [n,n-1..0]]
+    where var = 255 `div` n
 
 bluePalette :: Int -> [(Int,Int,Int)]
-bluePalette n    = [(0, 0, 80+i*4) | i <- [0..n]] 
-
-purplePalette :: Int -> [(Int,Int,Int)]
-purplePalette n  = [(80 +(i*n `div` n*3), 0, 80 + (i*n `div` n*3)) | i <- [0..n]]
+bluePalette n    = [(0, 0, 255 - var*i) | i <- [n, n-1..0]]
+    where var = 255 `div` n
 
 -------------------------------------------------------------------------------
 --  SVG
@@ -69,9 +75,9 @@ svgElements func elements styles = concat $ zipWith func elements styles
 --                                Case 1
 -----------------------------------------------------------------------------
 
-genRectsInLine :: Int -> Int -> [Rect]
-genRectsInLine l c = concat [[((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)]] | n <- [0..fromIntegral(l-1)]]
-    where gap   = 10
+genRects :: Int -> Int -> [Rect]
+genRects l c = [((m*(w+gap), n*(h + 2*gap)),w,h) | m <- [0..fromIntegral (c-1)], n <- [0..fromIntegral(l-1)]]
+    where gap   = 5
           (w,h) = (50,50) -- Lado e altura do retângulo
 
 genCase1 :: IO ()
@@ -79,10 +85,10 @@ genCase1 = do
     writeFile "case1.svg" $ svgstrs1
     where svgstrs1 = svgBegin width height ++ svgfigs ++ svgEnd
           svgfigs  = svgElements svgRect rects (map svgStyle palette)
-          rects    = genRectsInLine l c
-          l        = 5  -- Quantidade de linhas da matriz
-          c        = 12 -- Quantidade de colunas da matriz
-          palette  = purplePalette (l*c)
+          rects    = genRects l c
+          l        = 12  -- Quantidade de linhas da matriz
+          c        = 20 -- Quantidade de colunas da matriz
+          palette  = customPalette (l*c)
           (width,height) = (fromIntegral (60*c), fromIntegral (70*l))
 
 -----------------------------------------------------------------------------
@@ -107,7 +113,7 @@ genCase2 = do
           svgfigs  = svgElements svgCircle circles (map svgStyle palette)
           circles  = genCircles1 n radium
           radium   = 10 -- Raio dos círculos menores
-          n        = 12 -- Número de círculos desejados
+          n        = 40 -- Número de círculos desejados
           palette  = raimbowPalette n
           (width,height) = (fromIntegral (10*n),fromIntegral (12*n))
 
@@ -119,7 +125,7 @@ gen3Circles :: Float -> Float -> Float -> [Circle]
 gen3Circles xc yc r = [if m /= 0.5 then ((xc + m*r,yc), r) else ((xc + m*r,yc - r), r) | m <- [0, 0.5, 1]]
 
 gen3CirclesMatrix :: Int -> Int -> Float -> [Circle]
-gen3CirclesMatrix c l r = concat [(concat [gen3Circles (pos*gap) (gap*m) r | pos <- [1.. fromIntegral c]]) | m <- [1..fromIntegral l]]
+gen3CirclesMatrix c l r = concat [gen3Circles (pos*gap) (gap*m) r | pos <- [1.. fromIntegral c], m <- [1..fromIntegral l]]
     where gap = r*3
 
 genCase3 :: IO ()
@@ -160,7 +166,7 @@ genCase4 = do
           circlesB  = circleSinusoid c "blue"  radium
           c         = 30 -- Quantidade  de círculos em cada senóide
           radium    = 20 -- Raio de cada círculo da senóide
-          radiumCopy= 20 -- Cópia do raio de cada círculo, visando evitar conflito de tipos na definição da largura e altura da tela.
+          radiumCopy= 20 -- Cópia do raio de cada círculo da senóide, visando não acontecer conflito de tipos na definição da largura e altura da tela
           paletteR  = redPalette c
           paletteG  = greenPalette c
           paletteB  = bluePalette c
