@@ -1,6 +1,6 @@
 -------------------------------------------------------
--- Autor:        Leonardo Militz                     --
--- Disciplina:   Paradigmas da Programação           --
+-- Aluno:        Leonardo Militz                     --
+-- Disciplina:   Paradigmas da Programação - CC UFSM --
 -- Professor:    Andrea Schwertner Charão            --
 -- Créditos:     Andrea Schwertner Charão            --
 -------------------------------------------------------
