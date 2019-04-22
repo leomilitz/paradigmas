@@ -5,3 +5,4 @@ Aqui serão documentadas as atividades personalizadas da disciplina.
 _em andamento_
 
 ## Enigmas resolvidos em Prolog
+[Enigmas](https://github.com/leomilitz/paradigmas/tree/master/Perso/Enigmas)
