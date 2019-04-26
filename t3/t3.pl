@@ -73,7 +73,7 @@ countdown(N,[H|T]) :-
 
 % OBSERVAÇÃO: Fiz um adição no predicado, para que o usuário possa escolher o "teto"
 %             numérico para os números aleatórios, não se limitando ao valor default
-%			  do exercício que era 100.
+%	      do exercício que era 100.
 
 nRandoms(0,[],RandCeiling).
 nRandoms(N,[H|T],RandCeiling) :-
