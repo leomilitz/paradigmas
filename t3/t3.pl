@@ -1,9 +1,5 @@
-repete(0, _, []).
-repete(N, C, L) :- 
-	N > 0,
-	L = [C | T],
-	N1 is N - 1,
-	repete(N1, C, T).
+
+% T3 de Paradigmas da Programação, feito por Leonardo Militz.
 
 % 1. Defina um predicado odd(N) que seja verdadeiro se N for um número ímpar. Exemplo de uso:
 
@@ -38,8 +34,7 @@ incN(L1,L2,N) :-
 	incN(T1,T2,N).
 
 % 5. Defina um predicado recursivo comment(L1,L2), de forma que L1 seja uma lista de strings e L2 
-%    tenha todos os elementos de L1 concatenados com o prefixo "%%". Dica: consulte predicados Prolog
-%    para manipulação de strings.
+%    tenha todos os elementos de L1 concatenados com o prefixo "%%".
 
 comment([],[]).
 comment(L1,L2) :-
@@ -76,13 +71,17 @@ countdown(N,[H|T]) :-
 % 8. Defina um predicado recursivo nRandoms(N,L), de forma que L seja uma lista 
 %    com N números gerados aleatoriamente.
 
-nRandoms(0,[]).
-nRandoms(N,[H|T]) :-
+% OBSERVAÇÃO: Fiz um adição no predicado, para que o usuário possa escolher o "teto"
+%             numérico para os números aleatórios, não se limitando ao valor default
+%			  do exercício que era 100.
+
+nRandoms(0,[],RandCeiling).
+nRandoms(N,[H|T],RandCeiling) :-
 	N > 0,
-	N1 is random(100),
+	N1 is random(RandCeiling),
 	N1 = H,
 	N2 is N - 1,
-	nRandoms(N2,T).
+	nRandoms(N2,T,RandCeiling).
 
 % 9. Defina um predicado recursivo potN0(N,L), de forma que L seja uma lista de 
 %    potências de 2, com expoentes de N a 0. 
@@ -110,7 +109,7 @@ zipmult(L1,L2,L3) :-
 	zipmult(T1,T2,T3).
 
 % 11. Defina um predicado recursivo potencias(N,L), de forma que L seja uma lista com as N
-%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante.
+%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante. --refazer
 
 reverse([H|T],RestTail,ReverseList) :-
      reverse(T,[H|RestTail],ReverseList).
