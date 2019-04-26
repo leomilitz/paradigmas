@@ -1,6 +1,18 @@
 
 % T3 de Paradigmas da Programação, feito por Leonardo Militz.
 
+% ------------------- Auxiliares --------------------
+
+even(N) :- not(odd(N)).
+
+popLast([_], []).
+popLast([H, Next|T], [H|NTail]):-
+	popLast([Next|T], NTail).
+
+reverse([H|T],RestTail,ReverseList) :-
+     reverse(T,[H|RestTail],ReverseList).
+
+
 % 1. Defina um predicado odd(N) que seja verdadeiro se N for um número ímpar. Exemplo de uso:
 
 odd(N) :-
@@ -43,27 +55,27 @@ comment(L1,L2) :-
 	comment(T1,T2).
 
 % 6. Defina um predicado recursivo onlyEven(L1,L2), de forma que L2 seja uma lista só com os elementos 
-%    pares de L1, conforme o exemplo abaixo: -- incompleta
-
-even(N) :- not(odd(N)).
+%    pares de L1. -- Arrumar
 
 onlyEven([],[]).
-onlyEven(L1,L2) :- 
-	(L1 = [H1|T1], L2 = [H2|T2]),
-	even(H1), H2 is H1,
+
+onlyEven([],L) :-
+	onlyEven2([],[]).	
+
+onlyEven([H1|T1],[H2|T2]) :- 
+	even(H1),
+	H2 is H1,
 	onlyEven(T1,T2).
 
-onlyEven(L1,L2) :-
-	(L1 = [H1|T1], L2 = [H2|T2]),
-	odd(H1),
-	onlyEven(T1, L2).
+onlyEven([H1|T1],[H2|T2]) :-
+	onlyEven(T1,[H2|T2]).
 
 % 7. Defina um predicado recursivo countdown(N,L), de forma que L seja uma lista 
 %    com os números [N, N-1, N-2, .., 1], sendo N um número positivo.
 
 countdown(0,[]).
 countdown(N,[H|T]) :-
-	N>0,
+	N > 0,
 	H is N,
 	N1 is N - 1,
 	countdown(N1,T).
@@ -73,7 +85,7 @@ countdown(N,[H|T]) :-
 
 % OBSERVAÇÃO: Fiz um adição no predicado, para que o usuário possa escolher o "teto"
 %             numérico para os números aleatórios, não se limitando ao valor default
-%	      do exercício que era 100.
+%			  do exercício que era 100.
 
 nRandoms(0,[],RandCeiling).
 nRandoms(N,[H|T],RandCeiling) :-
@@ -109,11 +121,11 @@ zipmult(L1,L2,L3) :-
 	zipmult(T1,T2,T3).
 
 % 11. Defina um predicado recursivo potencias(N,L), de forma que L seja uma lista com as N
-%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante. --refazer
-
-reverse([H|T],RestTail,ReverseList) :-
-     reverse(T,[H|RestTail],ReverseList).
+%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante. -- refazer, solução provisória.
 	
 potencias(N,L) :-
 	potN0(N,L2),
-	reverse(L2,L).
+	reverse(L2,L3),
+	popLast(L3,L).
+
+% 12. ???
