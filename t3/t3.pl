@@ -129,7 +129,7 @@ potencias(N,L) :-
 	popLast(L3,L).
 
 % 12. Defina um predicao recursivo cedulas(V,L1,L2), que receba um valor V e uma lista L1 de cédulas com 
-% valores em Reais (R$), em ordem decrescente, e obtenha a lista L2 decompondo o valor V em 0 ou mais cédulas de cada tipo.
+%     valores em Reais (R$), em ordem decrescente, e obtenha a lista L2 decompondo o valor V em 0 ou mais cédulas de cada tipo.
 
 cedulas(V,[],[]).
 cedulas(V,[H1|T1],[H2|T2]) :-
