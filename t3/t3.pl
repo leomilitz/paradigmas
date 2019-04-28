@@ -128,4 +128,16 @@ potencias(N,L) :-
 	reverse(L2,L3),
 	popLast(L3,L).
 
-% 12. ???
+% 12. Defina um predicao recursivo cedulas(V,L1,L2), que receba um valor V e uma lista L1 de cédulas com 
+% valores em Reais (R$), em ordem decrescente, e obtenha a lista L2 decompondo o valor V em 0 ou mais cédulas de cada tipo.
+
+cedulas(V,[],[]).
+cedulas(V,[H1|T1],[H2|T2]) :-
+    (V >= H1,
+    ModResult is mod(V,H1),
+    H2 is floor(V/H1),
+    cedulas(ModResult,T1,T2));
+    (V < H1, 
+    H2 is 0,
+    ModResult is mod(V,H1),
+    cedulas(ModResult,T1,T2)).
