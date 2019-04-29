@@ -9,8 +9,9 @@
    false.
   ```
   
-  **Maria** é a culpada do crime.
-
+  **Maria** é a culpada do crime. A arma utilizada foi um **bastão de baseball**, o motivo foi **dinheiro** e **insanidade**,
+  o local  de crime foi o **apartamento** e o crime ocorreu em uma **sexta-feira**.
+  
 ## Motivo
 ```
 ?- motivo(maria).
@@ -47,6 +48,32 @@ o que pode ser comprovado:
 ?- no_apartamento(maria), roubou_chave(maria), roubou_arma(maria).
 true 
 ```
+
+A arma usada foi o bastão de baseball:
+
+```
+?- bastao(maria).
+true.
+
+?- martelo(maria).
+false.
+```
+
+## Dia
+
+O crime ocorreu em uma sexta feira, como pode ser provado por:
+
+```
+no_apartamento(maria).
+true.
+
+?- estava_em(maria, X, quinta).
+X = sm.
+
+?- estava_em(maria, X, sexta).
+X = apartamento.
+```
+
 ## [Resolução em Prolog](https://github.com/leomilitz/paradigmas/blob/master/t4/t4.pl)
 
 
