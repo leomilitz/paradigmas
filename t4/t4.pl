@@ -1,23 +1,12 @@
-% arma:     bastão de baseball , martelo
-% dia:      quinta, quarta, sexta
-% lugares:  SM, POA
-% motivo:   dinheiro, ciúme ou insanidade.
-% vítima:   anita
 
-% 1. O bastão de baseball que foi roubado do amigo pobre de Anita, Bernardo, na quinta-feira em 
-%    Porto Alegre ou na quarta-feira em Santa Maria; OU
-
-% 2. O martelo que foi roubado da caixa de ferramentas do apartamento na quarta ou na quinta-feira.
-
-% 3. o agressor devia ser alguém que dividia o apartamento com Anita.
-
-% 4. o crime aconteceu na sexta ou na quinta-feira
-
-
+% Trabalho feito por Leonardo Militz, para a disciplina paradigmas da programação.
 
 %------------------------- integrantes do caso e suas peculiaridades ------------------------------------
 
 % Insanos:
+    
+    insano(adriano).
+    insano(maria).
     
 % Pobres:
     
@@ -34,39 +23,142 @@
 
 % Vitima:
 
+    vitima(anita).
+
 % Relacionamentos:
     
     relacionamento(bernardo, bia).
     relacionamento(bia, bernardo).
 
-    ex_relacionamento(bernardo, caren).
-    ex_relacionamento(caren, bernardo).
+    relacionamento(bernardo, caren).
+    relacionamento(caren, bernardo).
 
-    ex_relacionamento(anita, pedro).
-    ex_relacionamento(pedro, anita).
+    relacionamento(anita, pedro).
+    relacionamento(pedro, anita).
 
-    ex_relacionamento(pedro, alice).
-    ex_relacionamento(alice, pedro).
+    relacionamento(pedro, alice).
+    relacionamento(alice, pedro).
 
-    ex_relacionamento(henrique, alice).
-    ex_relacionamento(alice, henrique).
+    relacionamento(henrique, alice).
+    relacionamento(alice, henrique).
 
-    ex_relacionamento(henrique, maria).
-    ex_relacionamento(maria, henrique).
+    relacionamento(henrique, maria).
+    relacionamento(maria, henrique).
 
-    ex_relacionamento(maria, adriano).
-    ex_relacionamento(adriano, maria).
+    relacionamento(maria, adriano).
+    relacionamento(adriano, maria).
 
-    ex_relacionamento(adriano, caren).
-    ex_relacionamento(caren, adriano).
+    relacionamento(adriano, caren).
+    relacionamento(caren, adriano).
+
+% Local e dia:
+
+    estava_em(pedro, sm, segunda).
+    estava_em(pedro, sm, terca).
+    estava_em(pedro, poa, quarta).
+    estava_em(pedro, sm, quinta).
+    estava_em(pedro, apartamento, sexta).
+
+    estava_em(caren, poa, segunda).
+    estava_em(caren, poa, terca).
+    estava_em(caren, poa, quarta).
+    estava_em(caren, sm, quinta).
+    estava_em(caren, apartamento, sexta).
+
+    estava_em(henrique, apartamento, segunda).
+    estava_em(henrique, poa, terca).
+    estava_em(henrique, apartamento, quarta).
+    estava_em(henrique, apartamento, quinta).
+    estava_em(henrique, apartamento, sexta).
+
+    estava_em(bia, apartamento, segunda).
+    estava_em(bia, poa, terca).
+    estava_em(bia, poa, quarta).
+    estava_em(bia, sm, quinta).
+    estava_em(bia, apartamento, sexta).
+
+    estava_em(adriano, apartamento, segunda).
+    estava_em(adriano, apartamento, terca).
+    estava_em(adriano, sm, quarta).
+    estava_em(adriano, apartamento, quinta).
+    estava_em(adriano, apartamento, sexta).
+
+    estava_em(alice, apartamento, segunda).
+    estava_em(alice, poa, terca).
+    estava_em(alice, poa, quarta).
+    estava_em(alice, apartamento, quinta).
+    estava_em(alice, apartamento, sexta).
+
+    estava_em(bernardo, sm, segunda).
+    estava_em(bernardo, sm, terca).
+    estava_em(bernardo, poa, quarta).
+    estava_em(bernardo, sm, quinta).
+    estava_em(bernardo, apartamento, sexta).
+
+    estava_em(maria, apartamento, segunda).
+    estava_em(maria, sm, terca).
+    estava_em(maria, sm, quarta).
+    estava_em(maria, sm, quinta).
+    estava_em(maria, apartamento, sexta).
 
 % ----------------------------- Predicados para a solução do caso ---------------------------------------
 
-% acesso(X) :- 
-    % X Pode ter roubado a arma.
-    % X Pode ter roubado a chave.
-    % X Estava no apartamento no momento do crime.
+% Estava no apartamento no momento do crime.
+
+    no_apartamento(X) :- 
+        estava_em(X, apartamento, quinta);
+        estava_em(X, apartamento, sexta).
+
+% pode ter roubado a arma
+
+    % bastão
+    roubou_arma(X) :-
+        estava_em(X, poa, quinta);
+        estava_em(X, sm, quarta).
+    
+    % martelo
+    roubou_arma(X) :-
+        estava_em(X, apartamento, quarta);
+        estava_em(X, apartamento, quinta).
+
+% pode ter roubado a chave
+    roubou_chave(X) :-
+        estava_em(X, sm, quarta);
+        estava_em(X, poa, terca).
+
+    roubou_chave(bia). % ela não necessariamente roubou, mas é um predicado para
+                       % verificar se o culpado possuia chave. No caso, ela tem.
+
+% -----------------------------------------------------------------------------
+
+    acesso(X) :- 
+        no_apartamento(X),
+        roubou_arma(X),
+        roubou_chave(X).
+
+% -----------------------------------------------------------------------------
+% motivos:
+    ciumes(X) :-
+        relacionamento(X,anita),
+        relacionamento(anita,Y).
+    
+    insanidade(X) :-
+        insano(X).
+
+    dinheiro(X) :-
+        pobre(X).
+
+% ----------------------------------------------------------------------------
+    
+    % o fato de dinheiro ser um motivo é essencial, visto que dinheiro foi roubado.
+    motivo(X) :- 
+        dinheiro(X),
+        ciumes(X).
+    
+    motivo(X) :-
+        dinheiro(X),
+        insanidade(X).
 
 % ------------------------------------ Solução do caso ------------------------------------------------
 
-assassino(X) :- motivo(X), acesso(X).
+    assassino(X) :- motivo(X), acesso(X).
