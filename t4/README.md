@@ -11,7 +11,7 @@
   
   **Maria** é a culpada do crime.
 
-## Motivos:
+## Motivo
 ```
 ?- motivo(maria).
 true.
@@ -32,7 +32,7 @@ Ou seja, é inferível que as motivações de maria foram **insanidade** e **din
 true.
 ```
 
-## Acesso:
+## Acesso
 
 Além dos motivos, o protagonista do crime também precisa de acesso à cena do crime - e pode-se provar que Maria o possuia:
 
@@ -47,3 +47,6 @@ o que pode ser comprovado:
 ?- no_apartamento(maria), roubou_chave(maria), roubou_arma(maria).
 true 
 ```
+## [Resolução em Prolog](https://github.com/leomilitz/paradigmas/blob/master/t4/t4.pl)
+
+
