@@ -111,13 +111,15 @@
 
 % pode ter roubado a arma
 
+    roubou_arma(X) :- bastao(X) ; martelo(X).   
+    
     % bastão
-    roubou_arma(X) :-
+    bastao(X) :-
         estava_em(X, poa, quinta);
         estava_em(X, sm, quarta).
     
     % martelo
-    roubou_arma(X) :-
+    martelo(X) :-
         estava_em(X, apartamento, quarta);
         estava_em(X, apartamento, quinta).
 
