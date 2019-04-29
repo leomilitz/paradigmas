@@ -1,4 +1,6 @@
-# [Trabalho 4]("https://github.com/AndreaInfUFSM/elc117-2019a/tree/master/trabalhos/t4")
+# Trabalho 4
+
+## [Explicação do caso](https://github.com/AndreaInfUFSM/elc117-2019a/tree/master/trabalhos/t4)
 
 ## Culpado
   ```
