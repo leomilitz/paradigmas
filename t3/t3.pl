@@ -22,7 +22,7 @@ odd(N) :-
 % 2. Defina um predicado recursivo hasN(L,N) que seja verdadeiro se L for uma lista de N elementos.
 
 hasN([],N) :- N =< 0.
-hasN([H|T],N) :-
+hasN([_|T],N) :-
 	N > 0,
 	N1 is N-1,
 	hasN(T,N1).
@@ -39,7 +39,7 @@ inc99(L1,L2) :-
 % 4. Defina um predicado recursivo incN(L1,L2,N), de forma que L2 seja uma lista com todos os 
 %    elementos de L1 acrescidos da constante N.
 
-incN([],[],N).
+incN([],[],_).
 incN(L1,L2,N) :-
 	(L1 = [H1|T1], L2 = [H2|T2]),
 	H2 is H1 + N,
@@ -59,15 +59,12 @@ comment(L1,L2) :-
 
 onlyEven([],[]).
 
-onlyEven([],L) :-
-	onlyEven2([],[]).	
-
 onlyEven([H1|T1],[H2|T2]) :- 
 	even(H1),
 	H2 is H1,
 	onlyEven(T1,T2).
 
-onlyEven([H1|T1],[H2|T2]) :-
+onlyEven([_|T1],[H2|T2]) :-
 	onlyEven(T1,[H2|T2]).
 
 % 7. Defina um predicado recursivo countdown(N,L), de forma que L seja uma lista 
@@ -87,7 +84,7 @@ countdown(N,[H|T]) :-
 %             numérico para os números aleatórios, não se limitando ao valor default
 %			  do exercício que era 100.
 
-nRandoms(0,[],RandCeiling).
+nRandoms(0,[],_).
 nRandoms(N,[H|T],RandCeiling) :-
 	N > 0,
 	N1 is random(RandCeiling),
@@ -122,16 +119,21 @@ zipmult(L1,L2,L3) :-
 
 % 11. Defina um predicado recursivo potencias(N,L), de forma que L seja uma lista com as N
 %     primeiras potências de 2, sendo a primeira 2^0 e assim por diante. -- refazer, solução provisória.
-	
+
+potencias_aux(N,[],N).
+potencias_aux(X,[H|T],N) :-
+	X < N,
+	H is 2**X,
+	X1 is X + 1,
+	potencias_aux(X1, T, N).
+
 potencias(N,L) :-
-	potN0(N,L2),
-	reverse(L2,L3),
-	popLast(L3,L).
+	potencias_aux(0,L,N).
 
 % 12. Defina um predicao recursivo cedulas(V,L1,L2), que receba um valor V e uma lista L1 de cédulas com 
 %     valores em Reais (R$), em ordem decrescente, e obtenha a lista L2 decompondo o valor V em 0 ou mais cédulas de cada tipo.
 
-cedulas(V,[],[]).
+cedulas(_,[],[]).
 cedulas(V,[H1|T1],[H2|T2]) :-
     (V >= H1,
     ModResult is mod(V,H1),
