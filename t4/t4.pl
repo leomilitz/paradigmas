@@ -142,7 +142,7 @@
 % motivos:
     ciumes(X) :-
         relacionamento(X,anita),
-        relacionamento(anita,Y).
+        relacionamento(anita,_).
     
     insanidade(X) :-
         insano(X).
