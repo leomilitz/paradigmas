@@ -59,13 +59,14 @@ comment(L1,L2) :-
 
 onlyEven([],[]).
 
-onlyEven([H1|T1],[H2|T2]) :- 
-	even(H1),
-	H2 is H1,
-	onlyEven(T1,T2).
+onlyEven([H1|T1],L) :-
+	odd(H1),
+	onlyEven(T1,L).
 
-onlyEven([_|T1],[H2|T2]) :-
-	onlyEven(T1,[H2|T2]).
+onlyEven([H1|T1],[H2|T2]) :- 
+	H1 = H2,
+	even(H1),
+	onlyEven(T1,T2).
 
 % 7. Defina um predicado recursivo countdown(N,L), de forma que L seja uma lista 
 %    com os números [N, N-1, N-2, .., 1], sendo N um número positivo.
