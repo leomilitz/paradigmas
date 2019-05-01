@@ -55,7 +55,7 @@ comment(L1,L2) :-
 	comment(T1,T2).
 
 % 6. Defina um predicado recursivo onlyEven(L1,L2), de forma que L2 seja uma lista só com os elementos 
-%    pares de L1. -- Arrumar
+%    pares de L1.
 
 onlyEven([],[]).
 
