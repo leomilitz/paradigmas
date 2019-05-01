@@ -5,13 +5,7 @@
 
 even(N) :- not(odd(N)).
 
-popLast([_], []).
-popLast([H, Next|T], [H|NTail]):-
-	popLast([Next|T], NTail).
-
-reverse([H|T],RestTail,ReverseList) :-
-     reverse(T,[H|RestTail],ReverseList).
-
+% ---------------------------------------------------
 
 % 1. Defina um predicado odd(N) que seja verdadeiro se N for um número ímpar. Exemplo de uso:
 
