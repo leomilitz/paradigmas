@@ -119,7 +119,7 @@ zipmult(L1,L2,L3) :-
 	zipmult(T1,T2,T3).
 
 % 11. Defina um predicado recursivo potencias(N,L), de forma que L seja uma lista com as N
-%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante. -- refazer, solução provisória.
+%     primeiras potências de 2, sendo a primeira 2^0 e assim por diante.
 
 potencias_aux(N,[],N).
 potencias_aux(X,[H|T],N) :-
