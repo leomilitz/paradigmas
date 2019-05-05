@@ -27,8 +27,8 @@
 
 % Relacionamentos:
     
-    relacionamento(bernardo, bia).
-    relacionamento(bia, bernardo).
+    relacionamento(anita, bernardo).
+    relacionamento(bernardo, anita).
 
     relacionamento(bernardo, caren).
     relacionamento(caren, bernardo).
@@ -125,7 +125,7 @@
 
 % pode ter roubado a chave
     roubou_chave(X) :-
-        estava_em(X, sm, quarta);
+        estava_em(X, sm, segunda);
         estava_em(X, poa, terca).
 
     roubou_chave(bia). % ela não necessariamente roubou, mas é um predicado para
@@ -141,8 +141,9 @@
 % -----------------------------------------------------------------------------
 % motivos:
     ciumes(X) :-
-        relacionamento(X,anita),
-        relacionamento(anita,_).
+        vitima(Z),
+        relacionamento(X,Y),
+        relacionamento(Y,Z).
     
     insanidade(X) :-
         insano(X).
@@ -152,14 +153,10 @@
 
 % ----------------------------------------------------------------------------
     
-    % o fato de dinheiro ser um motivo é essencial, visto que dinheiro foi roubado.
-    motivo(X) :- 
-        dinheiro(X),
-        ciumes(X).
-    
     motivo(X) :-
-        dinheiro(X),
-        insanidade(X).
+        dinheiro(X);
+        insanidade(X);
+        ciumes(X).
 
 % ------------------------------------ Solução do caso ------------------------------------------------
 
