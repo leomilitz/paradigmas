@@ -145,6 +145,12 @@
         relacionamento(X,Y),
         relacionamento(Y,Z).
     
+    ciumes(X) :-
+        vitima(Z),
+        relacionamento(X,Z),
+        relacionamento(Z,Y),
+        Y \= X.
+    
     insanidade(X) :-
         insano(X).
 
