@@ -5,9 +5,7 @@
 ## Culpado
   ```
    ?-  assassino(X).
-   X = alice ;
-   X = alice ;
-   false.
+   X = alice.
   ```
   
   **Alice** é a culpada do crime. A arma utilizada foi um **martelo**, o motivo foi e **ciúmes**,
@@ -25,7 +23,7 @@ false.
 false.
 
 ?- ciumes(alice).
-true ;
+true.
 ```
 Ou seja, é inferível que a motivação de Alice foi **ciúmes**, visto que Alice namorou Pedro, que também namorou anita, como provado:
 
@@ -40,7 +38,7 @@ Além dos motivos, o protagonista do crime também precisa de acesso à cena do 
 
 ```
 ?- acesso(alice).
-true ;
+true.
 ```
 
 Para que ela possa ter acesso a cena do crime, ela precisaria ter a chave, a arma **e** estar presente nos dias do crime;
@@ -66,7 +64,7 @@ O crime ocorreu em uma sexta feira ou em uma quinta, como pode ser provado por:
 
 ```
 ?- no_apartamento(alice).
-true ;
+true.
 
 ?- estava_em(alice,X,quinta).
 X = apartamento.
