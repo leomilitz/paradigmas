@@ -166,4 +166,4 @@
 
 % ------------------------------------ Solução do caso ------------------------------------------------
 
-    assassino(X) :- motivo(X), acesso(X).
+    assassino(X) :- motivo(X), acesso(X), !.
