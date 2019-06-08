@@ -1,6 +1,6 @@
-#Random picker on Command Line
-##Instruções
-
+# Random picker on Command Line
+Este programa usa a linha de comando para embaralhar e imprimir uma lista de nomes contida em um arquivo texto.
+## Instruções
 Compilar e executar o código
 ```
 javac RandomPickerCmd.java
