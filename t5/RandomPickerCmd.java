@@ -6,11 +6,11 @@ class RandomPickerCmd {
 		ListShuffle list = new ListShuffle(args[0]);
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("Would you like an online shuffle (random.org)? \nThen, input 1. Otherwise, input other number.");
-		int resp = scan.nextInt();
+		System.out.println("Would you like an online shuffle (random.org)? \nThen, input 1.");
+		String resp = scan.nextLine();
 
 		switch (resp) {
-			case 1: 
+			case "1": 
 				System.out.println("\nOnline Shuffled " + args[0] + ":\n");
 				list.shuffleOnline(); 
 				break;
