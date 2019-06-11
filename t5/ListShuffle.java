@@ -3,17 +3,14 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.io.FileNotFoundException;
 
 class ListShuffle {
-	protected File file;
 	protected ArrayList<String> nameList;
 	protected String data;
 
-	public ListShuffle(String fileName) {
+	public ListShuffle(File file) {
 		try {
-			this.file 	  = new File(fileName);
-			Scanner scanner  = new Scanner(this.file);
+			Scanner scanner  = new Scanner(file);
 			this.nameList = new ArrayList<String>();
 			
 			while (scanner.hasNextLine()) {
@@ -25,6 +22,7 @@ class ListShuffle {
 		catch (FileNotFoundException e) {
       		System.out.println("An error occurred.");
       		e.printStackTrace();
+      		System.exit(1);
     	}
 	}
 
@@ -47,6 +45,15 @@ class ListShuffle {
 		return this.data;
 	}
 
+	public String getText() {
+		String str = new String();
+		for (int i=0 ; i<this.nameList.size() ; i++) {
+			str = str + this.nameList.get(i) + "\n";
+		}
+
+		return str;
+	}
+
 	public void shuffleOnline() {
 		this.setData();
 
@@ -59,23 +66,6 @@ class ListShuffle {
 	      con.setRequestProperty("User-Agent", "Mozilla/5.0");
 	      con.setDoOutput(true);
 	      
-	      // Configura dados que serão enviados na requisição
-	      // Nesse exemplo, os dados são as seguintes 3 strings:
-	      // Fulano
-	      // Beltrano
-	      // Sicrano
-	      // Os dados devem ser separados por %0D%0A, 
-	      // que corresponde a CR=LF usando HTML URL Encoding 
-	      // (https://www.w3schools.com/tags/ref_urlencode.asp)
-	      // Obs.: O formato desta requisição não é documentado pelo site random.org.
-	      // Esse formato foi descoberto usando uma ferramenta que navegadores 
-	      // oferecem para inspecionar o tráfego de requisições pela rede:
-	      // https://developers.google.com/web/tools/chrome-devtools/network/
-	      // ATENÇÃO: seu programa não deve enviar requisições em uma frequência maior
-	      // do que aquela que um humano conseguiria reproduzir :-) 
-	      // Caso haja mau uso do serviço, o site random.org vai bloquear suas requisições.
-	      // Veja regras para clientes automatizados em: https://www.random.org/clients/
-
 	      // Envia dados pela conexão aberta
 	      con.getOutputStream().write(this.getData().getBytes("UTF-8"));
 	      System.out.println("Response code: " + con.getResponseCode());

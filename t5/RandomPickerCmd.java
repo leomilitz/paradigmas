@@ -1,9 +1,13 @@
 import java.util.Scanner;
+import java.io.*;
+
 
 class RandomPickerCmd {
 
 	public static void main(String[] args) {	
-		ListShuffle list = new ListShuffle(args[0]);
+		File file = new File(args[0]);
+		ListShuffle list = new ListShuffle(file);
+
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("Would you like an online shuffle (random.org)? \nThen, input 1.");
