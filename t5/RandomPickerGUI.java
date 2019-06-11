@@ -20,6 +20,8 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.TextArea;
 
+import javafx.scene.control.Label;
+
 
 public class RandomPickerGUI extends Application{
 	public static void main(String[] args) {
@@ -45,11 +47,13 @@ public class RandomPickerGUI extends Application{
         MenuItem exit = new MenuItem("Exit");
         MenuItem about = new MenuItem("About");
 
-        Button btnTxt = new Button("Click to get text");
-        btnTxt.setMinWidth(50);
+        Button btnShuffle = new Button("Shuffle");
+        Button btnNext 	  = new Button("Next");
+        btnShuffle.setMinWidth(50);
+        btnNext.setMinWidth(50);
+
 
         // provisório, depois cria outra vbox pra mostrar o nome e o autor
-        about.setOnAction(e -> { System.out.println("Random Picker, Leonardo Militz"); });
         exit.setOnAction(e -> { primaryStage.close(); });        
 
         open.setOnAction(e -> { 
@@ -57,12 +61,12 @@ public class RandomPickerGUI extends Application{
         	ListShuffle list = new ListShuffle(selectedFile);
             textArea.setText(list.getText());
 
-        	btnTxt.setOnAction(action -> {
-            	System.out.println(textArea.getText());
+        	btnShuffle.setOnAction(action -> {
+        		list.shuffleOffline();
+        		textArea.setText(list.getText());
         	});
 
         });
-
 
         menu1.getItems().add(open);
 		menu1.getItems().add(exit);
@@ -74,9 +78,9 @@ public class RandomPickerGUI extends Application{
         // -----------------------------------------------------------------------------------------
         
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(menuBar, textArea, btnTxt);
+        vBox.getChildren().addAll(menuBar, textArea, btnShuffle, btnNext);
         
-        Scene scene = new Scene(vBox, 960, 600);
+        Scene scene = new Scene(vBox, 960, 350);
 
         primaryStage.setScene(scene);
         primaryStage.show();
