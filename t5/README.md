@@ -10,7 +10,7 @@
 - [x] Criar os menuitems
 - [x] Menuitem open
 - [x] Menuitem exit
-- [ ] Menuitem about
+- [x] Menuitem about
 - [x] TextArea ao abrir o MenuItem open
 - [x] TextArea permissiva
 - [x] Botão Shuffle que embaralha a lista
