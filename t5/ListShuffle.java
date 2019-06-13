@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 class ListShuffle {
-	protected ArrayList<String> nameList;
-	protected String data;
+	private ArrayList<String> nameList;
+	private String data;
 
 	public ListShuffle(File file) {
 		try {
@@ -54,6 +54,14 @@ class ListShuffle {
 		return str;
 	}
 
+	public int getSize() {
+		return this.nameList.size();
+	}
+
+	public String getItem(int i) {
+		return this.nameList.get(i);
+	}
+
 	public void shuffleOnline() {
 		this.setData();
 
@@ -86,6 +94,7 @@ class ListShuffle {
 	      in.close();
 	    } catch (IOException e) {
 	    	e.printStackTrace();
+	    	System.out.println("\n\nOffline shuffle:\n");
 	    }
 	}
 
