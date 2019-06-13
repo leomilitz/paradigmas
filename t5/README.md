@@ -11,8 +11,8 @@
 - [x] Menuitem open
 - [x] Menuitem exit
 - [ ] Menuitem about
-- [ ] TextArea ao abrir o MenuItem open
-- [ ] TextArea permissiva
-- [ ] Botão Shuffle que embaralha a lista
+- [x] TextArea ao abrir o MenuItem open
+- [x] TextArea permissiva
+- [x] Botão Shuffle que embaralha a lista
 - [ ] Mostrar os items da lista um de cada vez (botão next)
 - [ ] Organizar o código
