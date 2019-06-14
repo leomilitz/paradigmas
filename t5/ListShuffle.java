@@ -26,7 +26,11 @@ class ListShuffle {
     	}
 	}
 
-	public void shuffleOffline() {
+	public void shuffle() {
+		this.shuffleOnline();
+	}
+
+	private void shuffleOffline() {
 		Collections.shuffle(this.nameList);
 	}
 
@@ -62,7 +66,7 @@ class ListShuffle {
 		return this.nameList.get(i);
 	}
 
-	public void shuffleOnline() {
+	private void shuffleOnline() {
 		this.setData();
 
 		try {
@@ -80,7 +84,7 @@ class ListShuffle {
 
 	      // Cria objeto que fará leitura da resposta pela conexão aberta
 	      BufferedReader in = new BufferedReader(
-	        new InputStreamReader(con.getInputStream()));
+	      new InputStreamReader(con.getInputStream()));
 
 	      // Lê resposta, linha por linha
 	      String responseLine;
@@ -91,10 +95,12 @@ class ListShuffle {
 	        response.add(responseLine); // arraylist
 	      }
 
+	      this.nameList = response;
+
 	      in.close();
 	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    	System.out.println("\n\nOffline shuffle:\n");
+	    	System.out.println("\n\nOffline shuffle.\n");
+	    	this.shuffleOffline();
 	    }
 	}
 

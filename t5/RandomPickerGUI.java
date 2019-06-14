@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 
@@ -25,8 +26,28 @@ import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
 
+
 public class RandomPickerGUI extends Application{
-	public static void main(String[] args) {
+    private class NameBrowser {
+        private ListShuffle list;
+        private int curr;
+
+        public NameBrowser(ListShuffle l) {
+            this.list = l;
+            this.curr = 0;
+        }
+
+        public String next() {
+            this.curr = this.curr + 1;
+            return this.list.getItem(this.curr);
+        }
+
+        public int getCurrent() {
+            return this.curr;
+        }
+    }
+	
+    public static void main(String[] args) {
 		launch(args);
   	}
 
@@ -40,8 +61,7 @@ public class RandomPickerGUI extends Application{
             myWriter.close();
             
             ListShuffle noFileList = new ListShuffle(temp);
-            noFileList.shuffleOffline();
-            
+            noFileList.shuffle();
             textArea.setText(noFileList.getText());
         }
         catch(IOException e) {
@@ -52,8 +72,8 @@ public class RandomPickerGUI extends Application{
     private void showAppInfo() {
         Label lb = new Label("Autor: Leonardo Militz\nApp: Random Picker");
         VBox vb = new VBox();
+        
         vb.setAlignment(Pos.CENTER);
-
         vb.getChildren().add(lb);
 
         Stage stage = new Stage();
@@ -87,25 +107,34 @@ public class RandomPickerGUI extends Application{
         MenuItem exit = new MenuItem("Exit");
         MenuItem about = new MenuItem("About");
 
-        VBox vbBtns = new VBox();
+        HBox hbBtns = new HBox();
         Button btnShuffle = new Button("Shuffle");
-        Button btnNext 	  = new Button("Next");
-        btnShuffle.setMinWidth(70);
-        btnNext.setMinWidth(50);
-        vbBtns.getChildren().add(btnShuffle);
-        vbBtns.setAlignment(Pos.CENTER);
-        
-        btnShuffle.setOnAction(e -> { shuffleAndWrite(textArea); });
+        Button btnNext    = new Button("Next");
 
-        // provisório, depois cria outra vbox pra mostrar o nome e o autor
+        btnNext.setDisable(true);
+        btnShuffle.setMinWidth(70);
+        btnNext.setMinWidth(70);
+        
+        hbBtns.getChildren().addAll(btnShuffle, btnNext);
+        hbBtns.setSpacing(15);
+        hbBtns.setAlignment(Pos.CENTER);
+        
+        btnShuffle.setOnAction(e -> { 
+            btnNext.setDisable(false);
+            shuffleAndWrite(textArea);
+         });
+
         about.setOnAction(e -> { showAppInfo(); });
         exit.setOnAction(e -> { primaryStage.close(); });        
         open.setOnAction(e -> { 
-       	 	File selectedFile = fileChooser.showOpenDialog(primaryStage); // depois, a file vai ser "listShuffle.file"
+       	 	File selectedFile = fileChooser.showOpenDialog(primaryStage);
         	ListShuffle list = new ListShuffle(selectedFile);
             textArea.setText(list.getText());
 
-        	btnShuffle.setOnAction(action -> { shuffleAndWrite(textArea); });
+        	btnShuffle.setOnAction(action -> { 
+                btnNext.setDisable(false);
+                shuffleAndWrite(textArea);  
+            });
         });
 
         menu1.getItems().add(open);
@@ -119,9 +148,9 @@ public class RandomPickerGUI extends Application{
         
         VBox root = new VBox();
         root.setSpacing(10);
-        root.getChildren().addAll(vbMenuBar, vbTextArea, vbBtns);
+        root.getChildren().addAll(vbMenuBar, vbTextArea, hbBtns);
         
-        Scene scene = new Scene(root, 450, 580);
+        Scene scene = new Scene(root, 450, 610);
 
         primaryStage.setScene(scene);
         primaryStage.show();
