@@ -58,6 +58,10 @@ class ListShuffle {
 		return str;
 	}
 
+	public String getLast() {
+		return this.nameList.get(this.nameList.size() - 1);
+	}
+
 	public int getSize() {
 		return this.nameList.size();
 	}

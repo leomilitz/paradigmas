@@ -28,12 +28,15 @@ import javafx.geometry.Insets;
 
 
 public class RandomPickerGUI extends Application{
+    private ListShuffle list;
+    private NameBrowser nb;
+
     private class NameBrowser {
         private ListShuffle list;
         private int curr;
 
-        public NameBrowser(ListShuffle l) {
-            this.list = l;
+        public NameBrowser() {
+            this.list = list;
             this.curr = 0;
         }
 
@@ -44,6 +47,14 @@ public class RandomPickerGUI extends Application{
 
         public int getCurrent() {
             return this.curr;
+        }
+
+        public void reset() {
+            this.curr = 0;
+        }
+
+        public void setList(ListShuffle l) {
+            this.list = l;
         }
     }
 	
@@ -63,6 +74,8 @@ public class RandomPickerGUI extends Application{
             ListShuffle noFileList = new ListShuffle(temp);
             noFileList.shuffle();
             textArea.setText(noFileList.getText());
+
+            list = noFileList;
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -86,6 +99,8 @@ public class RandomPickerGUI extends Application{
   	@Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Random Picker");
+
+        NameBrowser nb = new NameBrowser();
 
         // Cria menu bar
         VBox vbMenuBar = new VBox();
@@ -111,6 +126,12 @@ public class RandomPickerGUI extends Application{
         Button btnShuffle = new Button("Shuffle");
         Button btnNext    = new Button("Next");
 
+        VBox vbLabel = new VBox();
+        Label current = new Label("");
+        vbLabel.setAlignment(Pos.CENTER);
+        vbLabel.setSpacing(15);
+        vbLabel.getChildren().add(current);
+
         btnNext.setDisable(true);
         btnShuffle.setMinWidth(70);
         btnNext.setMinWidth(70);
@@ -122,20 +143,55 @@ public class RandomPickerGUI extends Application{
         btnShuffle.setOnAction(e -> { 
             btnNext.setDisable(false);
             shuffleAndWrite(textArea);
+            btnShuffle.setDisable(true);
+
+            current.setText(list.getItem(0));
+
+            nb.setList(list);
+        
+            btnNext.setOnAction(event -> {
+                current.setText(nb.next());
+
+                if (current.getText() == list.getLast()) {                    
+                    btnNext.setDisable(true);
+                    btnShuffle.setDisable(false);
+                    nb.reset();
+                }
+            });
          });
 
         about.setOnAction(e -> { showAppInfo(); });
         exit.setOnAction(e -> { primaryStage.close(); });        
         open.setOnAction(e -> { 
-       	 	File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        	ListShuffle list = new ListShuffle(selectedFile);
+            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+        	list = new ListShuffle(selectedFile);
             textArea.setText(list.getText());
+
+            btnShuffle.setDisable(false);
+            btnNext.setDisable(true);
+
 
         	btnShuffle.setOnAction(action -> { 
                 btnNext.setDisable(false);
                 shuffleAndWrite(textArea);  
+                btnShuffle.setDisable(true);
+                current.setText(list.getItem(0));
+                
+                nb.setList(list);
+
+                btnNext.setOnAction(event -> {
+                    current.setText(nb.next());
+
+                    if (current.getText() == list.getLast()) {                    
+                        btnNext.setDisable(true);
+                        btnShuffle.setDisable(false);
+                        nb.reset();
+                    }
+                });
             });
+            
         });
+
 
         menu1.getItems().add(open);
 		menu1.getItems().add(exit);
@@ -148,7 +204,7 @@ public class RandomPickerGUI extends Application{
         
         VBox root = new VBox();
         root.setSpacing(10);
-        root.getChildren().addAll(vbMenuBar, vbTextArea, hbBtns);
+        root.getChildren().addAll(vbMenuBar, vbTextArea, hbBtns, vbLabel);
         
         Scene scene = new Scene(root, 450, 610);
 
