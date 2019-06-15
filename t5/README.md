@@ -1,11 +1,29 @@
 # Random Picker
-## Geral
+## Sobre o programa
+É um aplicativo que embaralha uma lista de nomes.
+## Compilar e executar
+Em uma linha de comando, faça os seguintes comandos:
+#### Compilar
+```
+javac *.java
+```
+#### Executar
+*RandomPickerCmd:*
+```
+java -cp . RandomPickerCmd seu_arquivo.txt
+```
+*RandomPickerGUI:*
+```
+java -cp . RandomPickerGUI
+```
+## Checklist
+#### Geral
 - [x] Embaralhamento offline
 - [x] Embaralhamento online
-## Random Picker Cmd
+#### Random Picker Cmd
 - [x] Resto
 - [x] Realizar a escolha automática do embaralhamento online ou offline
-## Random Picker GUI
+#### Random Picker GUI
 - [x] Criar a menubar
 - [x] Criar os menuitems
 - [x] Menuitem open
