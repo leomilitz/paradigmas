@@ -1,6 +1,6 @@
 # Random Picker
 ## Sobre o programa
-É um aplicativo que embaralha uma lista de nomes.
+É um aplicativo java que embaralha uma lista de nomes.
 ## Compilar e executar
 Em uma linha de comando, faça os seguintes comandos:
 #### Compilar
