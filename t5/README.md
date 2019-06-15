@@ -4,7 +4,7 @@
 - [x] Embaralhamento online
 ## Random Picker Cmd
 - [x] Resto
-- [ ] Realizar a escolha automática do embaralhamento online ou offline
+- [x] Realizar a escolha automática do embaralhamento online ou offline
 ## Random Picker GUI
 - [x] Criar a menubar
 - [x] Criar os menuitems
@@ -14,5 +14,5 @@
 - [x] TextArea ao abrir o MenuItem open
 - [x] TextArea permissiva
 - [x] Botão Shuffle que embaralha a lista
-- [ ] Mostrar os items da lista um de cada vez (botão next)
+- [x] Mostrar os items da lista um de cada vez (botão next)
 - [ ] Organizar o código
