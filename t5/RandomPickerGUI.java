@@ -204,13 +204,18 @@ public class RandomPickerGUI extends Application{
 
         // Tratamento do botão shuffle para a text area
         btnShuffle.setOnAction(e -> { 
-            btnNext.setDisable(false);
-            btnShuffle.setDisable(true);
-            
-            shuffleAndWrite(textArea);
+            if (textArea.getText().trim().isEmpty()) {
+                current.setText("You can't shuffle an empty list.");
+            }
+            else {
+                btnNext.setDisable(false);
+                btnShuffle.setDisable(true);
+                
+                shuffleAndWrite(textArea);
 
-            current.setText(list.getItem(0)); // Inicia a label com o primeiro elemento da lista
-            nb.setList(list); // A lista embaralhada foi adicionada ao Name Browser
+                current.setText(list.getItem(0)); // Inicia a label com o primeiro elemento da lista
+                nb.setList(list); // A lista embaralhada foi adicionada ao Name Browser
+            }
         });
         
         // Tratamento do botão next, que ativará quando shuffle for clicado.
