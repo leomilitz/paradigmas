@@ -1,6 +1,5 @@
 import java.io.*;
 
-
 class RandomPickerCmd {
 
 	public static void main(String[] args) {	
@@ -8,7 +7,7 @@ class RandomPickerCmd {
 		ListShuffle list = new ListShuffle(file);
 
 		list.shuffle();
-	
 		list.printCmd();
 	}
+
 }
