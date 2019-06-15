@@ -34,3 +34,8 @@ java -cp . RandomPickerGUI
 - [x] Botão Shuffle que embaralha a lista
 - [x] Mostrar os items da lista um de cada vez (botão next)
 - [x] Organizar o código
+
+## Observações
+- O programa não irá embaralhar apenas um item.
+- O botão next mostra os elementos da lista um por um, e o botão shuffle só irá ser habilitado apósa apresentação dos nomes acabar. Porém,
+  a lista **também** é mostrada como um todo na text área, por questão de tornar o programa útil.
