@@ -15,4 +15,4 @@
 - [x] TextArea permissiva
 - [x] Botão Shuffle que embaralha a lista
 - [x] Mostrar os items da lista um de cada vez (botão next)
-- [ ] Organizar o código
+- [x] Organizar o código
