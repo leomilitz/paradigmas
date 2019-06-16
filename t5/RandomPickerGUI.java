@@ -32,6 +32,8 @@ import javafx.geometry.Insets;
 public class RandomPickerGUI extends Application{
     private ListShuffle list; // Lista "global" usada pelo aplicativo.
 
+// ----------------------- Auxiliar Classes ------------------------
+    
     // Classe Name Browser serve para navegar entre os elementos da lista.
     private class NameBrowser {
         private ListShuffle list; // Lista utilizada pelo name broswer para navegar.
@@ -59,6 +61,8 @@ public class RandomPickerGUI extends Application{
         }
     }
 
+// ----------------------- Auxiliar Methods ------------------------
+
     // cria o file chooser, com os filtros de txt e all files. 
     // O diretório inicial é o mesmo da execução do programa.
     private FileChooser createFileChooser() { 
@@ -74,11 +78,13 @@ public class RandomPickerGUI extends Application{
 
         return fileChooser;
     }
-	
-    // Função principal.
-    public static void main(String[] args) {
-		launch(args);
-  	}
+    
+    // É um counter de linhas da text area.
+    private int textAreaLineCounter(TextArea textArea) {
+        int n = textArea.getText().split("\n").length;
+
+        return n;
+    }
 
     // Método responsável pelo embaralhamento e escrita em uma área de texto.
     // Este método cria um arquivo temporário com a text area para ser utilizado
@@ -118,7 +124,14 @@ public class RandomPickerGUI extends Application{
         stage.show();
     }
 
-// --------------------------- START -------------------------------
+// ---------------------------- Main -------------------------------
+    
+    // Função principal.
+    public static void main(String[] args) {
+		launch(args);
+  	}
+
+// ---------------------------- Start ------------------------------
   	@Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Random Picker");
@@ -194,18 +207,25 @@ public class RandomPickerGUI extends Application{
             FileChooser fileChooser = createFileChooser();
 
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        	list = new ListShuffle(selectedFile);
-            
-            textArea.setText(list.getText());
+        	
+            // evita que o programa faça operações com uma file caso ela seja null.
+            if (selectedFile != null) {
+                list = new ListShuffle(selectedFile);
+                
+                textArea.setText(list.getText());
 
-            btnShuffle.setDisable(false);
-            btnNext.setDisable(true);
+                btnShuffle.setDisable(false);
+                btnNext.setDisable(true);
+            }
         });
 
         // Tratamento do botão shuffle para a text area
         btnShuffle.setOnAction(e -> { 
             if (textArea.getText().trim().isEmpty()) {
                 current.setText("You can't shuffle an empty list.");
+            }
+            else if (textAreaLineCounter(textArea) == 1) {
+                current.setText("You can't shuffle only one element.");
             }
             else {
                 btnNext.setDisable(false);
