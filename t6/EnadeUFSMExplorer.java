@@ -48,17 +48,19 @@ public class EnadeUFSMExplorer extends Application {
 // ----------------------- Auxiliar Methods ------------------------
 
     private static EnadeTable createEnade(String[] metadata) {
+        System.out.println("\nCriando objeto...");
+
         EnadeTable aux = new EnadeTable();
 
-        if (metadata[1] != null) aux.setAno(metadata[1]);
-        if (metadata[2] != null) aux.setProva(metadata[2]);
-        if (metadata[3] != null) aux.setTipoQuestao(metadata[3]);
-        if (metadata[4] != null) aux.setIdQuestao(metadata[4]);
-        if (metadata[5] != null) aux.setObjeto(metadata[5]);
-        if (metadata[8] != null) aux.setAcertosCurso(metadata[8]);
-        if (metadata[9] != null) aux.setAcertosRegiao(metadata[9]);
-        if (metadata[10] != null) aux.setAcertosBrasil(metadata[10]);
-        if (metadata[11] != null) aux.setAcertosDif(metadata[11]);
+        aux.setAno(metadata[1]);
+        aux.setProva(metadata[2]);
+        aux.setTipoQuestao(metadata[3]);
+        aux.setIdQuestao(metadata[4]);
+        aux.setObjeto(metadata[5]);
+        aux.setAcertosCurso(metadata[8]);
+        aux.setAcertosRegiao(metadata[9]);
+        aux.setAcertosBrasil(metadata[10]);
+        aux.setAcertosDif(metadata[11]);
 
         System.out.println("Ano: " + metadata[1] + "\n"
             + "Prova: " + metadata[2] + "\n"
@@ -82,8 +84,10 @@ public class EnadeUFSMExplorer extends Application {
         // create an instance of BufferedReader
         // using try with resource, Java 7 feature to close resources
         try {
-            Scanner scan = new Scanner(new File("enade.csv"));
+            FileReader fr = new FileReader(fileName);
+            Scanner scan = new Scanner(fr);
             scan.useDelimiter("CC");
+            scan.next();
 
             while(scan.hasNext()) {
                 String line = scan.next();
@@ -93,10 +97,11 @@ public class EnadeUFSMExplorer extends Application {
                 String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 EnadeTable enadeObj = createEnade(attributes);
-
                 enade.add(enadeObj);
             }
 
+            scan.close();
+            fr.close();
         } 
         catch (IOException ioe) {
             ioe.printStackTrace();
@@ -104,6 +109,7 @@ public class EnadeUFSMExplorer extends Application {
 
         return enade;
     }
+
 
     // Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
@@ -183,7 +189,7 @@ public class EnadeUFSMExplorer extends Application {
         tableView.getColumns().addAll(tcObjeto, tcAcertosCurso, tcAcertosRegiao);
         tableView.getColumns().addAll(tcAcertosBrasil, tcAcertosDif);
         
-        ObservableList<EnadeTable> data = FXCollections.observableArrayList(readEnadeFromCSV("enade.csv"));
+        ObservableList<EnadeTable> data = FXCollections.observableArrayList(readEnadeFromCSV("enade1.csv"));
         tableView.setItems(data);
 
         vbTableView.setPadding(new Insets(0, 10, 0, 10));
