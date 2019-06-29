@@ -1,20 +1,10 @@
 public class EnadeTable {
 	private String ano, acertosCurso, acertosRegiao,
-			    acertosBrasil, acertosDif;
-
-	private String tipoQuestao, idQuestao, objeto, prova;
+			    acertosBrasil, acertosDif, tipoQuestao,
+			    idQuestao, objeto, prova;
 
 
 	public EnadeTable() {
-		this.ano = " ";
-		this.acertosCurso = " ";
-		this.acertosRegiao = " ";
-		this.acertosDif = " ";
-		this.acertosBrasil = " ";
-		this.tipoQuestao = " ";
-		this.idQuestao  = " ";
-		this.objeto = " ";
-		this.prova  = " ";
 	}
 
 //---------- getters -----------------
