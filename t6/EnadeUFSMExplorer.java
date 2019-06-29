@@ -42,13 +42,12 @@ import javafx.geometry.Insets;
 // -------------------------------------------------------------------------
 
 public class EnadeUFSMExplorer extends Application {
-
+    private ObservableList<EnadeTable> data;
 // ----------------------- Auxiliar Classes ------------------------
 
 // ----------------------- Auxiliar Methods ------------------------
 
     private static EnadeTable createEnade(String[] metadata) {
-        System.out.println("\nCriando objeto...");
 
         EnadeTable aux = new EnadeTable();
 
@@ -62,20 +61,22 @@ public class EnadeUFSMExplorer extends Application {
         aux.setAcertosBrasil(metadata[10]);
         aux.setAcertosDif(metadata[11]);
 
-        System.out.println("Ano: " + metadata[1] + "\n"
-            + "Prova: " + metadata[2] + "\n"
-            + "Tipo questao: " + metadata[3] + "\n"
-            + "Id questao: " + metadata[4] + "\n"
-            + "objeto: " + metadata[5] + "\n" 
-            + "acertos Curso: " + metadata[8] + "\n" 
-            + "acertos regiao: " + metadata[9] + "\n"
-            + "acertos brasil: " + metadata[10] + "\n"
-            + "acertos dif: " + metadata[11] + "\n------------------\n");
-
-        // create and return book of this metadata
         return aux;
     }
 
+    private boolean checkFileExistence(String fileName) {
+        boolean result;
+        try
+        {
+            final Path path = Files.createTempFile(fileName, ".csv");
+ 
+            result = Files.exists(path);     //true
+        } 
+        catch (IOException e) {
+        }
+
+        return false;
+    }
 
     private static ArrayList<EnadeTable> readEnadeFromCSV(String fileName) {
         ArrayList<EnadeTable> enade = new ArrayList<>();
@@ -86,14 +87,11 @@ public class EnadeUFSMExplorer extends Application {
         try {
             FileReader fr = new FileReader(fileName);
             Scanner scan = new Scanner(fr);
-            scan.useDelimiter("CC");
+            scan.useDelimiter("CC,");
             scan.next();
 
             while(scan.hasNext()) {
-                String line = scan.next();
-
-                System.out.println("----------------\n" + line);
-
+                String line = "," + scan.next();
                 String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 EnadeTable enadeObj = createEnade(attributes);
@@ -110,6 +108,13 @@ public class EnadeUFSMExplorer extends Application {
         return enade;
     }
 
+    private static void download(String url, String fileName) {
+        try (InputStream in = URI.create(url).toURL().openStream()) {
+            Files.copy(in, Paths.get(fileName));
+        }
+        catch(IOException e) {
+        }
+    }
 
     // Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
@@ -138,6 +143,10 @@ public class EnadeUFSMExplorer extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("ENADE-UFSM Explorer");
 
+        String urlStr = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTO06Jdr3J1kPYoTPRkdUaq8XuslvSD5--" +
+                        "FPMht-ilVBT1gExJXDPTiX0P3FsrxV5VKUZJrIUtH1wvN/pub?gid=0&single=true&output=csv";
+
+        String fileName = "enade";
 // -------------------------- Menu bar -----------------------------
 
 		VBox vbMenuBar = new VBox();
@@ -188,10 +197,17 @@ public class EnadeUFSMExplorer extends Application {
         tableView.getColumns().addAll(tcAno, tcProva, tcTipoQuestao, tcIdQuestao);
         tableView.getColumns().addAll(tcObjeto, tcAcertosCurso, tcAcertosRegiao);
         tableView.getColumns().addAll(tcAcertosBrasil, tcAcertosDif);
-        
-        ObservableList<EnadeTable> data = FXCollections.observableArrayList(readEnadeFromCSV("enade1.csv"));
-        tableView.setItems(data);
 
+        if (checkFileExistence(fileName) == true) {
+            data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
+        }
+        else {
+            download(urlStr, fileName + ".csv");
+            data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
+        }
+
+        tableView.setItems(data);
+        
         vbTableView.setPadding(new Insets(0, 10, 0, 10));
         vbTableView.getChildren().addAll(tableView);
 
@@ -202,6 +218,18 @@ public class EnadeUFSMExplorer extends Application {
 
     // Ação do botão exit, que fecha o estágio primário - encerrando o aplicativo.
     itemExit.setOnAction(e -> { primaryStage.close(); });
+
+    itemReload.setOnAction(e -> { 
+        tableView.getItems().clear();
+        
+        File file = new File(fileName + ".csv");
+        file.delete();
+        
+        download(urlStr, fileName + ".csv"); 
+        
+        data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
+        tableView.setItems(data);
+    });
 
 
 // ---------------- Root ------------------------
