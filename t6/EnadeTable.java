@@ -6,15 +6,15 @@ public class EnadeTable {
 
 
 	public EnadeTable() {
-		this.ano = "12412";
-		this.acertosCurso = "34";
-		this.acertosRegiao = "50";
-		this.acertosDif = "23";
-		this.acertosBrasil = "343";
-		this.tipoQuestao = "tipo questao";
-		this.idQuestao  = "2323-x";
-		this.objeto = "objeto";
-		this.prova  = "prova";
+		this.ano = " ";
+		this.acertosCurso = " ";
+		this.acertosRegiao = " ";
+		this.acertosDif = " ";
+		this.acertosBrasil = " ";
+		this.tipoQuestao = " ";
+		this.idQuestao  = " ";
+		this.objeto = " ";
+		this.prova  = " ";
 	}
 
 //---------- getters -----------------
