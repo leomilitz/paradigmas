@@ -227,7 +227,9 @@ public class EnadeUFSMExplorer extends Application {
         ImageView imageView;
         VBox vbImg = new VBox();
         
-        // Primeiro checa se o tamanho é maior que dois, pros verificador de imagens não rodar sempre.
+        // Primeiro checa se o tamanho é maior que dois, pro verificador de imagens não rodar sempre.
+        // Essa checagem é importante porque o link do csv, no campo de imagem, possui apenas uma letra
+        // S ou N em alguns itens.
         if (data.getImagem().length() > 2) {
             // Cria a imagem a partir  de uma URL válida.
             if (testImage(data.getImagem())) {
