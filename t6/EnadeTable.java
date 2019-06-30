@@ -47,19 +47,19 @@ public class EnadeTable {
 	}
 
 	public String getAcertosCurso() {
-		return this.acertosCurso;
+		return this.acertosCurso.replaceAll("\"", "");
 	} 
 
 	public String getAcertosRegiao() {
-		return this.acertosRegiao;
+		return this.acertosRegiao.replaceAll("\"", "");
 	}
 
 	public String getAcertosBrasil() {
-		return this.acertosBrasil;
+		return this.acertosBrasil.replaceAll("\"", "");
 	}  
 
 	public String getAcertosDif() {
-		return this.acertosDif;
+		return this.acertosDif.replaceAll("\"", "");
 	} 
 
 	public String getTipoQuestao() {
@@ -77,6 +77,63 @@ public class EnadeTable {
 	public String getProva() {
 		return this.prova;
 	} 
+
+	public float getAcertosBrasilValue() {
+		try {
+      		String aux = this.getAcertosBrasil().replace(",", ".");
+      		aux = aux.replaceAll("\"", "");
+      		
+      		float f = Float.parseFloat(aux);
+      		
+      		return f;
+    	}
+    	catch (NumberFormatException nfe) {
+      		return -1;
+    	}	
+	}
+
+	public float getAcertosCursoValue() {
+		try {
+      		String aux = this.getAcertosCurso().replace(",", ".");
+      		aux = aux.replaceAll("\"", "");
+      		
+      		float f = Float.parseFloat(aux);
+      		
+      		return f;
+    	}
+    	catch (NumberFormatException nfe) {
+      		return -1;
+    	}	
+	}
+
+	public float getAcertosRegiaoValue() {
+		try {
+      		String aux = this.getAcertosRegiao().replace(",", ".");
+      		aux = aux.replaceAll("\"", "");
+      		
+      		float f = Float.parseFloat(aux);
+      		
+      		return f;
+    	}
+    	catch (NumberFormatException nfe) {
+      		return -1;
+    	}	
+	}
+
+	public float getAcertosDifValue() {
+		try {
+      		String aux = this.getAcertosDif().replace(",", ".");
+      		aux = aux.replaceAll("\"", "");
+      		
+      		float f = Float.parseFloat(aux);
+      		
+      		return f;
+    	}
+    	catch (NumberFormatException nfe) {
+      		return 0;
+    	}	
+	}
+
 // --------- setters -----------------
 
 	public void setAno(String ano) {

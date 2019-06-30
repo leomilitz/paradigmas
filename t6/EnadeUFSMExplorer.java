@@ -37,6 +37,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -66,16 +70,16 @@ public class EnadeUFSMExplorer extends Application {
 
     // Método responsável em criar a label com as informações sobre o objeto
     private static String enadeToString(EnadeTable data) {
-        String aux = "Ano: "            + data.getAno() + "\n" +
-                     "Prova: "          + data.getProva() + "\n" +
-                     "Tipo Questão: "   + data.getTipoQuestao() + "\n" +
-                     "ID Questão: "     + data.getIdQuestao() + "\n" +
-                     "Objeto: "         + data.getObjeto() + "\n" +
-                     "Acertos Curso: "  + data.getAcertosCurso() + "\n" +
-                     "Acertos Região: " + data.getAcertosRegiao() + "\n" +
-                     "Acertos Brasil: " + data.getAcertosBrasil() + "\n" +
-                     "Acertos Dif. (Curso - Brasil): " + data.getAcertosDif() + "\n" +
-                     "\nGabarito: "       + data.getGabarito() + "\n" +
+        String aux = "Ano: "                                   + data.getAno()           + "\n" +
+                     "Prova: "                                 + data.getProva()         + "\n" +
+                     "Tipo Questão: "                          + data.getTipoQuestao()   + "\n" +
+                     "ID Questão: "                            + data.getIdQuestao()     + "\n" +
+                     "Objeto: "                                + data.getObjeto()        + "\n" +
+                     "Acertos Curso:                       "   + data.getAcertosCurso()  + "\n" +
+                     "Acertos Região:                   "      + data.getAcertosRegiao() + "\n" +
+                     "Acertos Brasil:                        " + data.getAcertosBrasil() + "\n" +
+                     "Acertos Dif. (Curso - Brasil):   "       + data.getAcertosDif()    + "\n" +
+                     "\nGabarito: "                            + data.getGabarito()      + "\n" +
                      "Imagem: ";
 
 
@@ -213,19 +217,70 @@ public class EnadeUFSMExplorer extends Application {
         stage.show();
     }
 
+    // Mostra gráficos sobre as questões.
+    private void showChartWindow(EnadeTable data) {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Bar Chart of " + data.getAno() + " - ID: " + data.getIdQuestao());
+
+        Button exit = new Button("Exit");
+
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis   yAxis = new NumberAxis();
+        
+        BarChart<String,Number> bc = new BarChart<>(xAxis,yAxis);
+        bc.setTitle("Acertos Questão - ENADE " + data.getAno() + " - ID: " + data.getIdQuestao());
+       
+        yAxis.setLabel("Num. Acertos");
+
+        XYChart.Series series = new XYChart.Series();
+        series.setName(data.getAno());
+
+        series.getData().add(new XYChart.Data("Acertos Curso", data.getAcertosCursoValue()));
+        series.getData().add(new XYChart.Data("Acertos Brasil", data.getAcertosBrasilValue()));
+        series.getData().add(new XYChart.Data("Acertos Região", data.getAcertosRegiaoValue()));
+        
+        bc.getData().addAll(series);
+        bc.setBarGap(10);
+
+        exit.setOnAction(e -> { stage.close(); });
+
+        VBox root = new VBox();
+        root.getChildren().addAll(bc, exit);
+        root.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     // Mostra as informações sobre questão.
     private void showQuestionWindow(EnadeTable data) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Label lb = new Label(enadeToString(data));
+        lb.setPadding(new Insets(10, 10, 10, 10));
         Button exit = new Button("Exit");
+        Button charts = new Button("Charts");
         
         VBox vb = new VBox();
         HBox hb = new HBox();
+        hb.setSpacing(20);
 
         ImageView imageView;
         VBox vbImg = new VBox();
+
+        // Controla se existem valores a ser mostrados no chart ou não.
+        // O botão será desabilitado caso não existam dados.
+        if (data.getAcertosCursoValue()  >= 0 &&
+            data.getAcertosRegiaoValue() >= 0 &&
+            data.getAcertosBrasilValue() >= 0 ) {
+
+            charts.setDisable(false);
+        }
+        else {
+            charts.setDisable(true);
+        }
         
         // Primeiro checa se o tamanho é maior que dois, pro verificador de imagens não rodar sempre.
         // Essa checagem é importante porque o link do csv, no campo de imagem, possui apenas uma letra
@@ -242,12 +297,14 @@ public class EnadeUFSMExplorer extends Application {
                 vbImg.setPadding(new Insets(0, 10, 0, 10));
             }
         }
+        exit.setOnAction(e -> { stage.close(); });
+
+        charts.setOnAction( e -> { showChartWindow(data); });
         
         vb.getChildren().add(lb);
-        hb.getChildren().add(exit);
+        hb.getChildren().addAll(exit, charts);
         hb.setAlignment(Pos.CENTER);
 
-        exit.setOnAction(e  -> { stage.close(); });
         
         VBox root = new VBox();
         root.setSpacing(10);
