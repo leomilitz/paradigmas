@@ -1,7 +1,9 @@
 public class EnadeTable {
 	private String ano, acertosCurso, acertosRegiao,
 			    acertosBrasil, acertosDif, tipoQuestao,
-			    idQuestao, objeto, prova;
+			    idQuestao, objeto, prova, curso, 
+			    objetoDetalhado, gabarito, texto,
+			    imagem, urlProva, urlSintese, urlCurso;
 
 
 	public EnadeTable() {
@@ -11,6 +13,38 @@ public class EnadeTable {
 	public String getAno() {
 		return this.ano;
 	} 
+
+	public String getCurso() {
+		return this.curso;
+	} 
+
+	public String getUrlProva() {
+		return this.urlProva;
+	} 
+
+	public String getUrlCurso() {
+		return this.urlCurso;
+	}
+
+	public String getUrlSintese() {
+		return this.urlSintese;
+	} 
+
+	public String getObjetoDetalhado() {
+		return this.objetoDetalhado;
+	} 
+
+	public String getGabarito() {
+		return this.gabarito;
+	}
+
+	public String getTexto() {
+		return this.texto;
+	}
+
+	public String getImagem() {
+		return this.imagem;
+	}
 
 	public String getAcertosCurso() {
 		return this.acertosCurso;
@@ -47,6 +81,38 @@ public class EnadeTable {
 
 	public void setAno(String ano) {
 		this.ano = ano;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public void setUrlProva(String urlProva) {
+		this.urlProva = urlProva;
+	}
+
+	public void setUrlCurso(String urlCurso) {
+		this.urlCurso = urlCurso;
+	}
+
+	public void setUrlSintese(String urlSintese) {
+		this.urlSintese = urlSintese;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
+	public void setObjetoDetalhado(String objetoDetalhado) {
+		this.objetoDetalhado = objetoDetalhado;
+	}
+
+	public void setGabarito(String gabarito) {
+		this.gabarito = gabarito;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
 	public void setAcertosCurso(String acertosCurso) {

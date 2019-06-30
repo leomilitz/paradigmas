@@ -24,6 +24,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,6 +44,9 @@ import javafx.geometry.Insets;
 
 public class EnadeUFSMExplorer extends Application {
     private ObservableList<EnadeTable> data;
+    private String urlStr = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTO06Jdr3J1kPYoTPRkdUaq8XuslvSD5--" +
+                    "FPMht-ilVBT1gExJXDPTiX0P3FsrxV5VKUZJrIUtH1wvN/pub?gid=0&single=true&output=csv";
+
 // ----------------------- Auxiliar Classes ------------------------
 
 // ----------------------- Auxiliar Methods ------------------------
@@ -51,15 +55,23 @@ public class EnadeUFSMExplorer extends Application {
 
         EnadeTable aux = new EnadeTable();
 
+        aux.setCurso(metadata[0]);
         aux.setAno(metadata[1]);
         aux.setProva(metadata[2]);
         aux.setTipoQuestao(metadata[3]);
         aux.setIdQuestao(metadata[4]);
         aux.setObjeto(metadata[5]);
+        aux.setObjetoDetalhado(metadata[6]);
+        aux.setGabarito(metadata[7]);
         aux.setAcertosCurso(metadata[8]);
         aux.setAcertosRegiao(metadata[9]);
         aux.setAcertosBrasil(metadata[10]);
         aux.setAcertosDif(metadata[11]);
+        aux.setTexto(metadata[12]);
+        aux.setImagem(metadata[13]);
+        aux.setUrlProva(metadata[14]);
+        aux.setUrlSintese(metadata[15]);
+        aux.setUrlCurso(metadata[16]);
 
         return aux;
     }
@@ -87,7 +99,7 @@ public class EnadeUFSMExplorer extends Application {
         try {
             FileReader fr = new FileReader(fileName);
             Scanner scan = new Scanner(fr);
-            scan.useDelimiter("CC,");
+            scan.useDelimiter("CC,|SI,");
             scan.next();
 
             while(scan.hasNext()) {
@@ -116,6 +128,39 @@ public class EnadeUFSMExplorer extends Application {
         }
     }
 
+    private void redefineUrlWindow() {
+        Stage stage = new Stage();
+
+        Label lb = new Label("Type the new url value:");
+        Button confirm = new Button("Confirm");
+        Button cancel = new Button("Cancel");
+        TextField tf = new TextField();
+        VBox vb = new VBox();
+        HBox hb = new HBox();
+
+        vb.setAlignment(Pos.CENTER);
+        vb.getChildren().addAll(lb, tf);
+        
+        hb.getChildren().addAll(confirm, cancel);
+        hb.setAlignment(Pos.CENTER);
+        hb.setSpacing(10);
+
+        confirm.setOnAction(e -> { 
+            urlStr = tf.getText();
+            stage.close();
+         });
+        cancel.setOnAction(e  -> { stage.close(); });
+
+        VBox root = new VBox();
+        root.setSpacing(10);
+        root.getChildren().addAll(vb, hb);
+        
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
     // Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
         Label lb = new Label("Author: Leonardo Militz\nApp: ENADE-UFSM Explorer");
@@ -141,11 +186,8 @@ public class EnadeUFSMExplorer extends Application {
 // ---------------------------- Start ------------------------------
   	@Override
     public void start(Stage primaryStage) {
+        
         primaryStage.setTitle("ENADE-UFSM Explorer");
-
-        String urlStr = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTO06Jdr3J1kPYoTPRkdUaq8XuslvSD5--" +
-                        "FPMht-ilVBT1gExJXDPTiX0P3FsrxV5VKUZJrIUtH1wvN/pub?gid=0&single=true&output=csv";
-
         String fileName = "enade";
 // -------------------------- Menu bar -----------------------------
 
@@ -173,6 +215,7 @@ public class EnadeUFSMExplorer extends Application {
 
         VBox vbTableView = new VBox();
         TableView tableView = new TableView();
+        tableView.setPrefSize(600, 900);
 
         TableColumn<String, EnadeTable> tcAno 			= new TableColumn<>("Ano");
         TableColumn<String, EnadeTable> tcProva 		= new TableColumn<>("Prova");
@@ -229,6 +272,10 @@ public class EnadeUFSMExplorer extends Application {
         
         data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
         tableView.setItems(data);
+    });
+
+    itemSource.setOnAction(e -> {
+        redefineUrlWindow();
     });
 
 
