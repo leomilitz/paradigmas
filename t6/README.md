@@ -14,3 +14,6 @@ Serve para ver questões do ENADE de algum csv.
   - Botão charts
 ## Personalizado
 - Dentro da janela modal, existe um botão charts que abre outra janela modal que mostras as informações da questão via gráfico.
+
+## Observações
+Sem suporte para caracteres especiais.
