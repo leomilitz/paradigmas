@@ -18,11 +18,15 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 // .scene imports
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
@@ -31,10 +35,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageViewBuilder;
+import javafx.scene.image.Image;
 
 // .stage imports
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
 
 // .geometry imports
 import javafx.geometry.Pos;
@@ -50,6 +58,22 @@ public class EnadeUFSMExplorer extends Application {
 // ----------------------- Auxiliar Classes ------------------------
 
 // ----------------------- Auxiliar Methods ------------------------
+
+    private String enadeToString(EnadeTable data) {
+        String aux = "Ano: "            + data.getAno() + "\n" +
+                     "Prova: "          + data.getProva() + "\n" +
+                     "Tipo Questão: "   + data.getTipoQuestao() + "\n" +
+                     "ID Questão: "     + data.getIdQuestao() + "\n" +
+                     "Objeto: "         + data.getObjeto() + "\n" +
+                     "Acertos Curso: "  + data.getAcertosCurso() + "\n" +
+                     "Acertos Região: " + data.getAcertosRegiao() + "\n" +
+                     "Acertos Brasil: " + data.getAcertosBrasil() + "\n" +
+                     "Acertos Dif. (Curso - Brasil): " + data.getAcertosDif() + "\n" +
+                     "\nGabarito: "     + data.getGabarito() + "\n" +
+                     "URL imagem: > "     + data.getImagem() + " <\n";
+
+        return aux;
+    }
 
     private static EnadeTable createEnade(String[] metadata) {
 
@@ -128,39 +152,6 @@ public class EnadeUFSMExplorer extends Application {
         }
     }
 
-    private void redefineUrlWindow() {
-        Stage stage = new Stage();
-
-        Label lb = new Label("Type the new url value:");
-        Button confirm = new Button("Confirm");
-        Button cancel = new Button("Cancel");
-        TextField tf = new TextField();
-        VBox vb = new VBox();
-        HBox hb = new HBox();
-
-        vb.setAlignment(Pos.CENTER);
-        vb.getChildren().addAll(lb, tf);
-        
-        hb.getChildren().addAll(confirm, cancel);
-        hb.setAlignment(Pos.CENTER);
-        hb.setSpacing(10);
-
-        confirm.setOnAction(e -> { 
-            urlStr = tf.getText();
-            stage.close();
-         });
-        cancel.setOnAction(e  -> { stage.close(); });
-
-        VBox root = new VBox();
-        root.setSpacing(10);
-        root.getChildren().addAll(vb, hb);
-        
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
     // Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
         Label lb = new Label("Author: Leonardo Militz\nApp: ENADE-UFSM Explorer");
@@ -176,6 +167,38 @@ public class EnadeUFSMExplorer extends Application {
         stage.show();
     }
 
+    private void showQuestionWindow(EnadeTable data) {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+        Label lb = new Label(enadeToString(data));
+        Label imageLabel = new Label("");
+        Button exit = new Button("Exit");
+        
+        VBox vb = new VBox();
+        HBox hb = new HBox();
+
+       // if (data.getImagem().) {
+         //   ImageView imageView = ImageViewBuilder.create().image(new Image(data.getImagem())).build();       
+           // imageLabel.setGraphic(imageView);
+       // }
+        
+        vb.getChildren().addAll(lb, imageLabel);
+        hb.getChildren().add(exit);
+        hb.setAlignment(Pos.CENTER);
+
+        exit.setOnAction(e  -> { stage.close(); });
+        
+        VBox root = new VBox();
+        root.setSpacing(10);
+        root.getChildren().addAll(vb, hb);
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+    }
+
 // ---------------------------- Main -------------------------------
     
     // Função principal.
@@ -185,7 +208,8 @@ public class EnadeUFSMExplorer extends Application {
 
 // ---------------------------- Start ------------------------------
   	@Override
-    public void start(Stage primaryStage) {
+
+    public void start(final Stage primaryStage) {
         
         primaryStage.setTitle("ENADE-UFSM Explorer");
         String fileName = "enade";
@@ -250,33 +274,82 @@ public class EnadeUFSMExplorer extends Application {
         }
 
         tableView.setItems(data);
+
+        tableView.setRowFactory( tv -> {
+            TableRow<EnadeTable> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    EnadeTable clickedData = row.getItem();
+                    
+                    showQuestionWindow(clickedData);
+                }
+            });
+            
+            return row ;
+        });
         
         vbTableView.setPadding(new Insets(0, 10, 0, 10));
         vbTableView.getChildren().addAll(tableView);
 
 // ----------------------- Button Actions --------------------------
  	
-    // Ação do botão about, que mostra o nome do programador e o nome do aplicativo.
-    itemAbout.setOnAction(e -> { showAppInfo(); });   
+        // Ação do botão about, que mostra o nome do programador e o nome do aplicativo.
+        itemAbout.setOnAction(e -> { showAppInfo(); });   
 
-    // Ação do botão exit, que fecha o estágio primário - encerrando o aplicativo.
-    itemExit.setOnAction(e -> { primaryStage.close(); });
+        // Ação do botão exit, que fecha o estágio primário - encerrando o aplicativo.
+        itemExit.setOnAction(e -> { primaryStage.close(); });
 
-    itemReload.setOnAction(e -> { 
-        tableView.getItems().clear();
-        
-        File file = new File(fileName + ".csv");
-        file.delete();
-        
-        download(urlStr, fileName + ".csv"); 
-        
-        data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
-        tableView.setItems(data);
-    });
+        itemReload.setOnAction(e -> { 
+            tableView.getItems().clear();
+            
+            File file = new File(fileName + ".csv");
+            file.delete();
+            
+            download(urlStr, fileName + ".csv"); 
+            
+            data = FXCollections.observableArrayList(readEnadeFromCSV(fileName + ".csv"));
+            tableView.setItems(data);
+        });
 
-    itemSource.setOnAction(e -> {
-        redefineUrlWindow();
-    });
+
+        itemSource.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = new Stage();
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(primaryStage);       
+
+                Label lb = new Label("Type the new url value:");
+                Button confirm = new Button("Confirm");
+                Button cancel = new Button("Cancel");
+                TextField tf = new TextField();
+                VBox vb = new VBox();
+                HBox hb = new HBox();
+
+                vb.setAlignment(Pos.CENTER);
+                vb.getChildren().addAll(lb, tf);
+                
+                hb.getChildren().addAll(confirm, cancel);
+                hb.setAlignment(Pos.CENTER);
+                hb.setSpacing(10);
+
+                confirm.setOnAction(e -> { 
+                    urlStr = tf.getText();
+                    stage.close();
+                 });
+                cancel.setOnAction(e  -> { stage.close(); });
+
+                VBox root = new VBox();
+                root.setSpacing(10);
+                root.getChildren().addAll(vb, hb);
+                
+                Scene scene = new Scene(root);
+                
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
 
 
 // ---------------- Root ------------------------
