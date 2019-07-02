@@ -1,5 +1,16 @@
 # Java UFSM-ENADE Explorer
 Serve para ver questões do ENADE de algum csv.
+## Compilar e Executar
+
+```
+javac *.java
+```
+
+executar:
+```
+java -cp . EnadeUFSMExplorer.java
+```
+
 ## Implentações Obrigatórias
 Todos requisitos foram cumpridos.
 
