@@ -29,9 +29,9 @@ java -cp .:gson-2.8.5.jar GitHubAnalyzerGUI
 java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd
 ```
 ## Checklist
-[x] - resto
-[ ] - fazer a leitura dos dados a partir de uma thread separada
-[ ] - Ver qual foi o commit mais recente e antigo
-[ ] - Controle de paginação da REST API
-[ ] - GitHubAnalyzerCmd
-[ ] - Personalizadas
+- [x] resto
+- [ ] fazer a leitura dos dados a partir de uma thread separada
+- [ ] Ver qual foi o commit mais recente e antigo
+- [ ] Controle de paginação da REST API
+- [ ] GitHubAnalyzerCmd
+- [ ] Personalizadas
