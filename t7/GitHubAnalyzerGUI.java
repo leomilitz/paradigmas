@@ -12,6 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+// gson imports
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+
 // javafx imports
 import javafx.application.Application;
 
@@ -52,6 +57,26 @@ import javafx.geometry.Insets;
 public class GitHubAnalyzerGUI extends Application {
 
 // ----------------------- Auxiliar Methods ------------------------
+
+	private ArrayList<String> setUrlList(File file) {
+		try {
+			Scanner scanner  = new Scanner(file);
+			ArrayList<String> urlList = new ArrayList<String>();
+			
+			while (scanner.hasNextLine()) {
+	        	urlList.add(scanner.nextLine()); 
+			}
+
+			scanner.close();
+
+			return urlList;
+		}
+		catch (FileNotFoundException e) {
+      		System.out.println("An error occurred.");
+      		e.printStackTrace();
+      		return null;
+    	}
+	}
 
 	// Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
@@ -116,6 +141,8 @@ public class GitHubAnalyzerGUI extends Application {
         menuTools.getItems().add(itemCommitAnalyzer);
         menuHelp.getItems().add(itemAbout);
 
+        itemCommitAnalyzer.setDisable(true);
+
         menuBar.getMenus().addAll(menuFile, menuTools, menuHelp);
 
 // -------------------------- List View ----------------------------
@@ -136,7 +163,13 @@ public class GitHubAnalyzerGUI extends Application {
             if (selectedFile != null) {
             	analyzer.setUrlList(selectedFile);
             	analyzer.setListView(listView);
+            
+            	itemCommitAnalyzer.setDisable(false);
             }
+        });
+
+        itemCommitAnalyzer.setOnAction(e -> {
+        	analyzer.setCommitList();
         });
 
         // Ação do botão about, que mostra o nome do programador e o nome do aplicativo.
