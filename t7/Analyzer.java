@@ -18,6 +18,10 @@ public class Analyzer {
 		this.url = url;
 	}
 
+	public String getUrl() {
+		return this.url;
+	}
+
 	public void setCommitList() {
 		this.commitList = new ArrayList<CommitObject>();
 		int i=0;
@@ -66,8 +70,6 @@ public class Analyzer {
 			    	comObj.setAuthor(author);
 			    	comObj.setCommitter(committer);
 			    	comObj.setMessage(message);
-
-			    	//comObj.print();
 
 			    	this.commitList.add(comObj);		    
 			    }

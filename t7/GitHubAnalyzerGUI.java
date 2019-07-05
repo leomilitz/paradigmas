@@ -62,6 +62,42 @@ public class GitHubAnalyzerGUI extends Application {
 	private int listIndex;
 // ----------------------- Auxiliar Methods ------------------------
 
+	// Verifica se uma URL é válida ou não.
+    public static boolean urlValidator(String url) {
+        try {
+            new URL(url).toURI();
+            return true;
+        }
+        catch (URISyntaxException exception) {
+            return false;
+        }
+        catch (MalformedURLException exception) {
+            return false;
+        }
+    }
+
+	private int getMostCommitsRepoIndex( ArrayList<Analyzer> analyzer, int option) {
+		int greater = 0;
+		int lesser = 0;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getCommitNumber() > analyzer.get(greater).getCommitNumber()) {
+				greater = i;
+			}
+			else {
+				lesser = i;
+			}
+		}
+
+		// Se a opção escolhida for 1, retorna o maior. Se for 0, retorna o menor.
+		if (option == 1)
+			return greater;
+		else
+			return lesser;
+	}
+
+
+
 	private void showCommitInfo(CommitObject commit) {
 		Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -160,10 +196,9 @@ public class GitHubAnalyzerGUI extends Application {
 		lv.getItems().clear();
 
 		for (int i=0 ; i<urlList.size() ; i++) {
-			lv.getItems().add(urlList.get(i));
+			lv.getItems().add("[" + i + "] - " + urlList.get(i));
 		}
 	}
-
 
 	// Método responsável por mostrar o item do menu "about".
 	private void showAppInfo() {
@@ -273,6 +308,8 @@ public class GitHubAnalyzerGUI extends Application {
             	// cria a lista de analyzers.
             	setAnalyzerList(selectedFile, analyzer);
             	setListView(listView);
+
+            	itemCommitAnalyzer.setDisable(false);
             }
         });
 
@@ -295,9 +332,12 @@ public class GitHubAnalyzerGUI extends Application {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		        listIndex = listView.getSelectionModel().getSelectedIndex();
-		        lblRepoInfo.setText("Commit number: " + analyzer.get(listIndex).getCommitNumber()
-		        					+ "        Average Message Length: " + 
-		        					analyzer.get(listIndex).getMessageAverageSize());
+		        
+		        if (urlValidator(analyzer.get(listIndex).getUrl())) {
+			        lblRepoInfo.setText("Commit number: " + analyzer.get(listIndex).getCommitNumber()
+			        					+ "        Average Message Length: " + 
+			        					analyzer.get(listIndex).getMessageAverageSize());
+		        }
 		    }
 		});
 
