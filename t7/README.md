@@ -39,4 +39,4 @@ java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd seu_arquivo.txt
   - [x] Informação detalhada de cada commit
 
 ## Observações
-A lista de links que disponibilizei apenas possui 3 links, meu repositório, e os dois repositórios disponíveis do repositório da professora Andrea Schwertner Charão ([AndreaInfUFSM](https://github.com/AndreaInfUFSM)). Em visão geral, foi extremamente divertido ter as minhas requisições bloqueadas ao ler o gigantesco repositório do gson várias vezes, por preguiça de botar todas informações em um arquivo.
+A lista de links que disponibilizei apenas possui 3 links, meu repositório, e os dois repositórios disponíveis do repositório da professora Andrea Schwertner Charão ([AndreaInfUFSM](https://github.com/AndreaInfUFSM)). Em visão geral, foi extremamente divertido ter as minhas requisições bloqueadas ao ler o gigantesco repositório do gson várias vezes, por não ter botado todas informações em um arquivo.
