@@ -17,7 +17,7 @@ java -cp .;gson-2.8.5.jar GitHubAnalyzerGUI
 ```
 ##### Cmd
 ```
-java -cp .;gson-2.8.5.jar GitHubAnalyzerCmd
+java -cp .;gson-2.8.5.jar GitHubAnalyzerCmd seu_arquivo.txt
 ```
 #### Linux
 ##### GUI
@@ -26,7 +26,7 @@ java -cp .:gson-2.8.5.jar GitHubAnalyzerGUI
 ```
 ##### Cmd
 ```
-java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd
+java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd seu_arquivo.txt
 ```
 ## Checklist
 - [x] resto
