@@ -105,12 +105,17 @@ public class GitHubAnalyzerGUI extends Application {
         Button exit = new Button("Exit");
         Label info = new Label(commit.getInfo());
 
+        VBox vbLbl = new VBox();
+        vbLbl.setAlignment(Pos.CENTER);
+        vbLbl.setPadding(new Insets(10, 20, 10, 20));
+        vbLbl.getChildren().add(info);
+
         exit.setOnAction(e -> { stage.close(); });
 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
-        root.getChildren().addAll(info, exit);
+        root.getChildren().addAll(vbLbl, exit);
         
         Scene scene = new Scene(root);
         
@@ -122,6 +127,16 @@ public class GitHubAnalyzerGUI extends Application {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
+
+        Label lblRepoInfo = new Label("");
+        VBox vbLbl = new VBox();
+        vbLbl.setAlignment(Pos.CENTER);
+        vbLbl.setPadding(new Insets(10, 20, 10, 20));
+        vbLbl.getChildren().add(lblRepoInfo);
+
+        lblRepoInfo.setText("Commit number: " + analyzer.getCommitNumber()
+			        					+ "        Average Message Length: " + 
+			        					analyzer.getMessageAverageSize());
 
         Button exit = new Button("Exit");
         Button seeInfo = new Button("Commit Details");
@@ -145,7 +160,7 @@ public class GitHubAnalyzerGUI extends Application {
 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
-        vb.getChildren().addAll(vbListView);
+        vb.getChildren().addAll(vbListView, vbLbl);
         
         exit.setOnAction(e -> { stage.close(); });
 
@@ -168,18 +183,57 @@ public class GitHubAnalyzerGUI extends Application {
         stage.show();
     }
 
+    private void showGeneralInfo(ArrayList<Analyzer> analyzer) {
+    	Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+    	Label lbl = new Label(
+        	"Repository with most commits: [" + getMostCommitsRepoIndex(analyzer, 1) + "]" +
+        	"\nRepository with less commits: [" + getMostCommitsRepoIndex(analyzer, 0) + "]" +
+        	"\nRepository with most recent commit: [" + getAllRepoMostRecentCommitIndex(analyzer) + "]" +
+        	" - " + getAllRepoMostRecentCommit(analyzer) +
+        	"\nRepository with oldest commit: ["  + getAllRepoOldestCommitIndex(analyzer) + "]" +
+        	" - " + getAllRepoOldestCommit(analyzer)
+        );
+
+        VBox vbLbl = new VBox();
+        vbLbl.setAlignment(Pos.CENTER);
+        vbLbl.setPadding(new Insets(10, 20, 10, 20));
+        vbLbl.getChildren().add(lbl);
+
+        Button exit = new Button("Exit");
+
+        VBox vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.getChildren().addAll(vbLbl, exit);
+        
+        exit.setOnAction(e -> { stage.close(); });
+
+        VBox root = new VBox();
+        root.setSpacing(10);
+        root.getChildren().addAll(vb);
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+    }
+
 	private void setAnalyzerList(File file, ArrayList<Analyzer> analyzer) {
 		try {
 			Scanner scanner  = new Scanner(file);
 			ArrayList<String> urlListAux = new ArrayList<String>();
 	
 			while (scanner.hasNextLine()) {
-	        	String str = scanner.nextLine();
-	        	Analyzer an = new Analyzer();
-	        	an.setUrl(str);
+		        String str = scanner.nextLine();
+		        
+		        if (urlValidator(str)) {
+		        	Analyzer an = new Analyzer();
+		        	an.setUrl(str);
 
-	        	analyzer.add(an);
-	        	urlListAux.add(str); 
+		        	analyzer.add(an);
+		        	urlListAux.add(str);
+		        } 
 			}
 
 			scanner.close();
@@ -192,7 +246,7 @@ public class GitHubAnalyzerGUI extends Application {
     	}
 	}
 
-		private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
+	private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getMostRecentCommit();
 
 		for (int i=1 ; i<analyzer.size() ; i++) {
@@ -332,14 +386,6 @@ public class GitHubAnalyzerGUI extends Application {
 
         hbBtn.getChildren().addAll(btnRepoInfo, btnGeneralInfo);
 
-// ---------------------------- Labels -----------------------------
-
-        Label lblRepoInfo = new Label("");
-        VBox vbLbl = new VBox();
-        vbLbl.setAlignment(Pos.CENTER);
-        vbLbl.setPadding(new Insets(10, 20, 10, 20));
-        vbLbl.getChildren().add(lblRepoInfo);
-
 // -------------------------- List View ----------------------------
 
         ListView listView = new ListView();
@@ -366,12 +412,18 @@ public class GitHubAnalyzerGUI extends Application {
         });
 
         itemCommitAnalyzer.setOnAction(e -> {
-        	btnGeneralInfo.setDisable(false); 
-        	btnRepoInfo.setDisable(false);
+        	itemCommitAnalyzer.setDisable(true);
         	
-        	for (int i=0 ; i<analyzer.size() ; i++) {
-        		analyzer.get(i).setCommitList();
-        	}
+        	Thread t1 = new Thread(() -> {
+        		for (int i=0 ; i<analyzer.size() ; i++) {
+        			analyzer.get(i).setCommitList();
+        		}
+        	});
+
+	        btnGeneralInfo.setDisable(false); 
+	        btnRepoInfo.setDisable(false);
+        	
+        	t1.start();
         });
 
         // Ação do botão about, que mostra o nome do programador e o nome do aplicativo.
@@ -379,34 +431,29 @@ public class GitHubAnalyzerGUI extends Application {
 
         // Ação do botão exit, que fecha o estágio primário - encerrando o aplicativo.
         itemExit.setOnAction(e -> { primaryStage.close(); });
-
+ 
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		        listIndex = listView.getSelectionModel().getSelectedIndex();
-		        
-		        if (urlValidator(analyzer.get(listIndex).getUrl()) && 
-		        	analyzer.get(listIndex).getCommitList() != null) {
-			        	lblRepoInfo.setText("Commit number: " + analyzer.get(listIndex).getCommitNumber()
-			        					+ "        Average Message Length: " + 
-			        					analyzer.get(listIndex).getMessageAverageSize());
-		        }
 		    }
 		});
 
         btnRepoInfo.setOnAction(e -> {
-        	showRepository(analyzer.get(listIndex));
+        	if (analyzer.get(analyzer.size() - 1).wasRead())
+        		showRepository(analyzer.get(listIndex));
         });
 
         btnGeneralInfo.setOnAction(e -> {
-        	
+        	if (analyzer.get(analyzer.size() - 1).wasRead())
+        		showGeneralInfo(analyzer);
         });
 
 // ---------------------------- Root -------------------------------
 		
 		VBox root = new VBox();
         root.setSpacing(10);
-       	root.getChildren().addAll(vbMenuBar, vbListView, vbLbl, hbBtn);
+       	root.getChildren().addAll(vbMenuBar, vbListView, hbBtn);
         
         Scene scene = new Scene(root, 950, 650);
 

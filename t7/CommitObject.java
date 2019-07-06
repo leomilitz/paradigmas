@@ -40,7 +40,7 @@ public class CommitObject {
 
 	public String getInfo() {
 		return 
-			"\nAuthor: \n" + 
+			"Author: \n" + 
 			"\n\tName  - " + this.author.getName()  + 
 			"\n\temail - " + this.author.getEmail() +
 			"\n\tDate  - " + this.author.getDate()  +
