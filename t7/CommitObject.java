@@ -19,6 +19,10 @@ public class CommitObject {
 		return this.message;
 	}
 
+	public Person getAuthor() {
+		return this.author;
+	}
+
 	public void print() {
 		System.out.println(
 			"---------------------\n" + 

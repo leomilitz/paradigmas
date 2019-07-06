@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Date;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,6 +56,7 @@ import javafx.stage.Modality;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
+
 // -------------------------------------------------------------------------
 
 public class GitHubAnalyzerGUI extends Application {
@@ -95,8 +97,6 @@ public class GitHubAnalyzerGUI extends Application {
 		else
 			return lesser;
 	}
-
-
 
 	private void showCommitInfo(CommitObject commit) {
 		Stage stage = new Stage();
@@ -190,6 +190,58 @@ public class GitHubAnalyzerGUI extends Application {
       		System.out.println("An error occurred.");
       		e.printStackTrace();
     	}
+	}
+
+		private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getMostRecentCommit();
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getMostRecentCommit().compareTo(date) > 0) {
+				date = analyzer.get(i).getMostRecentCommit();
+			}
+		}
+
+		return date;
+	}
+
+	private static int getAllRepoMostRecentCommitIndex(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getMostRecentCommit();
+		int index = 0;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getMostRecentCommit().compareTo(date) > 0) {
+				date = analyzer.get(i).getMostRecentCommit();
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	private static Date getAllRepoOldestCommit(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getOldestCommit();
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getOldestCommit().compareTo(date) < 0) {
+				date = analyzer.get(i).getOldestCommit();
+			}
+		}
+
+		return date;
+	}
+
+	private static int getAllRepoOldestCommitIndex(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getOldestCommit();
+		int index = 0;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getOldestCommit().compareTo(date) < 0) {
+				date = analyzer.get(i).getOldestCommit();
+				index = i;
+			}
+		}
+
+		return index;
 	}
 
 	private void setListView(ListView lv) {		
@@ -333,8 +385,9 @@ public class GitHubAnalyzerGUI extends Application {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		        listIndex = listView.getSelectionModel().getSelectedIndex();
 		        
-		        if (urlValidator(analyzer.get(listIndex).getUrl())) {
-			        lblRepoInfo.setText("Commit number: " + analyzer.get(listIndex).getCommitNumber()
+		        if (urlValidator(analyzer.get(listIndex).getUrl()) && 
+		        	analyzer.get(listIndex).getCommitList() != null) {
+			        	lblRepoInfo.setText("Commit number: " + analyzer.get(listIndex).getCommitNumber()
 			        					+ "        Average Message Length: " + 
 			        					analyzer.get(listIndex).getMessageAverageSize());
 		        }
@@ -343,6 +396,10 @@ public class GitHubAnalyzerGUI extends Application {
 
         btnRepoInfo.setOnAction(e -> {
         	showRepository(analyzer.get(listIndex));
+        });
+
+        btnGeneralInfo.setOnAction(e -> {
+        	
         });
 
 // ---------------------------- Root -------------------------------

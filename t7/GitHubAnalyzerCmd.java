@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 public class GitHubAnalyzerCmd {
 	// Verifica se uma URL é válida ou não.
@@ -68,6 +69,58 @@ public class GitHubAnalyzerCmd {
     	}
 	}
 
+	private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getMostRecentCommit();
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getMostRecentCommit().compareTo(date) > 0) {
+				date = analyzer.get(i).getMostRecentCommit();
+			}
+		}
+
+		return date;
+	}
+
+	private static int getAllRepoMostRecentCommitIndex(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getMostRecentCommit();
+		int index = 0;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getMostRecentCommit().compareTo(date) > 0) {
+				date = analyzer.get(i).getMostRecentCommit();
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	private static Date getAllRepoOldestCommit(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getOldestCommit();
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getOldestCommit().compareTo(date) < 0) {
+				date = analyzer.get(i).getOldestCommit();
+			}
+		}
+
+		return date;
+	}
+
+	private static int getAllRepoOldestCommitIndex(ArrayList<Analyzer> analyzer) {
+		Date date = analyzer.get(0).getOldestCommit();
+		int index = 0;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getOldestCommit().compareTo(date) < 0) {
+				date = analyzer.get(i).getOldestCommit();
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
 	public static void main(String[] args) {
 		ArrayList<String> urlList = new ArrayList<>();
 		ArrayList<Analyzer> analyzer = new ArrayList<>();
@@ -82,16 +135,18 @@ public class GitHubAnalyzerCmd {
 	        	"\n========================\n" +
 	        	"Repository [" + i + "]:\n" +
 	        	"\tAverage Message Length: " + analyzer.get(i).getMessageAverageSize() +
-	        	"\t\nNumber of Commits: " + analyzer.get(i).getCommitNumber()
+	        	"\n\tNumber of Commits: " + analyzer.get(i).getCommitNumber()
 	        );
         }
 
         System.out.println(
         	"\n-------------------------------------" +
-        	"\nRepository with most commits: " + getMostCommitsRepoIndex(analyzer, 1) +
-        	"\nRepository with less commits: " + getMostCommitsRepoIndex(analyzer, 0) +
-        	"\nRepository with most recent commit: " + //-> algo aqui <-//
-        	"\nRepository with least recent commit: "  //-> algo aqui <-//
-        	);
+        	"\nRepository with most commits: [" + getMostCommitsRepoIndex(analyzer, 1) + "]" +
+        	"\nRepository with less commits: [" + getMostCommitsRepoIndex(analyzer, 0) + "]" +
+        	"\nRepository with most recent commit: [" + getAllRepoMostRecentCommitIndex(analyzer) + "]" +
+        	" - " + getAllRepoMostRecentCommit(analyzer) +
+        	"\nRepository with oldest commit: ["  + getAllRepoOldestCommitIndex(analyzer) + "]" +
+        	" - " + getAllRepoOldestCommit(analyzer)
+        );
 	}
 }
