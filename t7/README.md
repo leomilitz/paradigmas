@@ -37,3 +37,6 @@ java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd seu_arquivo.txt
 - [x] Personalizadas
   - [x] Gráfico de barras (número de commits por repositório)
   - [x] Informação detalhada de cada commit
+
+## Observações
+A lista de links que disponibilizei apenas possui 3 links, meu repositório, e os dois repositórios disponíveis do repositório da professora Andrea Schwertner Charão ([AndreaInfUFSM](https://github.com/AndreaInfUFSM))
