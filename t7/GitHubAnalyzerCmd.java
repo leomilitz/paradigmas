@@ -24,6 +24,7 @@ public class GitHubAnalyzerCmd {
         }
     }
 
+    // Pega o maior ou o menor indice do repositório com maior ou menor número.
 	private static int getMostCommitsRepoIndex( ArrayList<Analyzer> analyzer, int option) {
 		int greater = 0;
 		int lesser = 0;
@@ -44,6 +45,7 @@ public class GitHubAnalyzerCmd {
 			return lesser;
 	}
 
+	// Inicia a lista de repositórios com base no número de links válidos.
 	private static void setAnalyzerList(File file, ArrayList<Analyzer> analyzer, ArrayList<String> urlList) {
 		try {
 			Scanner scanner  = new Scanner(file);
@@ -69,6 +71,7 @@ public class GitHubAnalyzerCmd {
     	}
 	}
 
+	// Pega o commit mais recente de todos repositórios.
 	private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getMostRecentCommit();
 
@@ -81,6 +84,7 @@ public class GitHubAnalyzerCmd {
 		return date;
 	}
 
+	// Pega o índice do commit mais recente de todos repositórios.
 	private static int getAllRepoMostRecentCommitIndex(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getMostRecentCommit();
 		int index = 0;
@@ -95,6 +99,7 @@ public class GitHubAnalyzerCmd {
 		return index;
 	}
 
+	// Pega o commit mais antigo de todos repositórios.
 	private static Date getAllRepoOldestCommit(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getOldestCommit();
 
@@ -107,6 +112,7 @@ public class GitHubAnalyzerCmd {
 		return date;
 	}
 
+	// Pega o índice do commit mais antigo de todos repositórios.
 	private static int getAllRepoOldestCommitIndex(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getOldestCommit();
 		int index = 0;

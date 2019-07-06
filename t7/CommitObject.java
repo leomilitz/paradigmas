@@ -1,7 +1,9 @@
+
+// Classe que lida com os atributos dos commits
 public class CommitObject {
-	private Person author;
-	private Person committer;
-	private String message;
+	private Person author; // Autor do commit
+	private Person committer; // committer
+	private String message; // Mensagem do commit
 
 	public void setAuthor(Person author) {
 		this.author   = author;
@@ -23,6 +25,7 @@ public class CommitObject {
 		return this.author;
 	}
 
+	// Printa na linha de comando as informações do commit
 	public void print() {
 		System.out.println(
 			"---------------------\n" + 
@@ -38,6 +41,7 @@ public class CommitObject {
 			);
 	}
 
+	// Retorna as informações do commit
 	public String getInfo() {
 		return 
 			"Author: \n" + 

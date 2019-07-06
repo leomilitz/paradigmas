@@ -2,19 +2,18 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Date;
 
 // gson imports
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.*;
 
-
-import java.util.Date;
-
+// Classe que irá fazer a análise do repositório
 public class Analyzer {
-	private String url;
-	private ArrayList<CommitObject> commitList;
-	private boolean readed = false;
+	private String url; // url do repositório
+	private ArrayList<CommitObject> commitList; // arraylist com os commits
+	private boolean readed = false; // flag que informa se o repositório foi lido
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -28,17 +27,25 @@ public class Analyzer {
 		return this.readed;
 	}
 
+	// Gera a lista de commits.
 	public void setCommitList() {
 		this.commitList = new ArrayList<CommitObject>();
 		
 		int i=0;
-		while (i < 1) {
+		while (true) {
 			try {
 				URL url = new URL(this.url + "?page=" + i);
 			    HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			    con.setRequestMethod("GET");
 			    con.setRequestProperty("User-Agent", "Mozilla/5.0");
 			    System.out.println("Response code: " + con.getResponseCode());
+
+			    // Caso tenha sido excedido o número de aquisições, o usuário pode ler até onde
+			    // o programa conseguiu ler algo. E caso chegue em uma página que não existe,
+			    // o break é efetuado também.
+			    if (con.getResponseCode() != 200) {
+			    	break;
+			    }
 			    
 			    BufferedReader in = new BufferedReader(
 			      new InputStreamReader(con.getInputStream())
@@ -85,12 +92,20 @@ public class Analyzer {
 			    }
 				
 				in.close();
+
+				// Outra condição de parada, é caso o número de commits da página
+				// seja menor que 30.
+				if (results.size() < 30) break;
 			}
 			catch(IOException e) {}
+			
 			i++;
 		}
 
-		this.readed = true;
+		// Só irá ser permitido acessar os itens caso exista algum commit
+		// no repositório em questão.
+		if (this.commitList.size() > 0)
+			this.readed = true;
 	}
 
 	public ArrayList<CommitObject> getCommitList() {
@@ -105,6 +120,7 @@ public class Analyzer {
 		return commitList.size();
 	}
 
+	// Retorna o tamanho médio das mensagens do repositório.
 	public float getMessageAverageSize() {
 		int sum = 0;
 		for (int i=0 ; i<commitList.size() ; i++) {
@@ -117,7 +133,7 @@ public class Analyzer {
 			return 0;
 	}
 
-
+	// Retorna a data do commit mais recente deste repositório.
 	public Date getMostRecentCommit() {
 		Date date = commitList.get(0).getAuthor().getDateValue();
 
@@ -130,6 +146,7 @@ public class Analyzer {
 		return date;
 	}
 
+	// Retorna a data do commit mais antigo deste repositório.
 	public Date getOldestCommit() {
 		Date date = commitList.get(0).getAuthor().getDateValue();
 		

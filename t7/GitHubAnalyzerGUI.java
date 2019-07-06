@@ -1,7 +1,6 @@
 // -------------------------- IMPORTS ---------------------------------------
 
 // java imports
-
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -60,8 +59,9 @@ import javafx.geometry.Insets;
 // -------------------------------------------------------------------------
 
 public class GitHubAnalyzerGUI extends Application {
-	private ArrayList<String> urlList;
-	private int listIndex;
+	private ArrayList<String> urlList; // lista de url a ser tratada pelo programa.
+	private int listIndex; // indice atual da list view em pauta.
+
 // ----------------------- Auxiliar Methods ------------------------
 
 	// Verifica se uma URL é válida ou não.
@@ -78,6 +78,32 @@ public class GitHubAnalyzerGUI extends Application {
         }
     }
 
+    // Pega o maior ou o menor número de commits entre os repositórios.
+    private int getMostCommitsRepo( ArrayList<Analyzer> analyzer, int option) {
+        int g_index = 0;
+        int l_index = 0;
+    	int greater = analyzer.get(l_index).getCommitNumber();
+		int lesser = greater;
+
+		for (int i=1 ; i<analyzer.size() ; i++) {
+			if (analyzer.get(i).getCommitNumber() > analyzer.get(g_index).getCommitNumber()) {
+				greater = analyzer.get(i).getCommitNumber();
+                g_index = i;
+			}
+			else if (analyzer.get(i).getCommitNumber() < analyzer.get(l_index).getCommitNumber()){
+				lesser = analyzer.get(i).getCommitNumber();
+			    l_index = i;
+            }
+		}
+
+		// Se a opção escolhida for 1, retorna o maior. Se for 0, retorna o menor.
+		if (option == 1)
+			return greater;
+		else
+			return lesser;
+    }
+
+    // Pega o maior ou o menor indice do repositório com maior ou menor número.
 	private int getMostCommitsRepoIndex( ArrayList<Analyzer> analyzer, int option) {
 		int greater = 0;
 		int lesser = 0;
@@ -98,6 +124,7 @@ public class GitHubAnalyzerGUI extends Application {
 			return lesser;
 	}
 
+	// Abre a janela que mostra as informações detalhadas de um commits específico.
 	private void showCommitInfo(CommitObject commit) {
 		Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -123,6 +150,8 @@ public class GitHubAnalyzerGUI extends Application {
         stage.show();
 	}
 
+	// Mostra a listview com os commits de um repositório, e possibilita
+	// interação do usuário com cada item.
 	private void showRepository(Analyzer analyzer) {
 
         Stage stage = new Stage();
@@ -183,13 +212,16 @@ public class GitHubAnalyzerGUI extends Application {
         stage.show();
     }
 
+    // Mostra informações gerais sobre os repositórios, com gráfico de barras.
     private void showGeneralInfo(ArrayList<Analyzer> analyzer) {
     	Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
     	Label lbl = new Label(
         	"Repository with most commits: [" + getMostCommitsRepoIndex(analyzer, 1) + "]" +
+        	" - " + getMostCommitsRepo(analyzer, 1) + " commits" +
         	"\nRepository with less commits: [" + getMostCommitsRepoIndex(analyzer, 0) + "]" +
+        	" - " + getMostCommitsRepo(analyzer, 0) + " commits" +
         	"\nRepository with most recent commit: [" + getAllRepoMostRecentCommitIndex(analyzer) + "]" +
         	" - " + getAllRepoMostRecentCommit(analyzer) +
         	"\nRepository with oldest commit: ["  + getAllRepoOldestCommitIndex(analyzer) + "]" +
@@ -201,16 +233,35 @@ public class GitHubAnalyzerGUI extends Application {
         vbLbl.setPadding(new Insets(10, 20, 10, 20));
         vbLbl.getChildren().add(lbl);
 
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis   yAxis = new NumberAxis();
+        
+        BarChart<String,Number> bc = new BarChart<>(xAxis,yAxis);
+        bc.setTitle("Commits per Repository");
+       
+        yAxis.setLabel("Commit Number");
+        xAxis.setLabel("Repository Index");
+
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Repository");
+
+        for (int i=0 ; i<analyzer.size() ; i++) {
+        	series.getData().add(new XYChart.Data("[" + i + "]", analyzer.get(i).getCommitNumber()));
+        }
+        
+        bc.getData().addAll(series);
+        bc.setBarGap(10);
+
         Button exit = new Button("Exit");
 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
-        vb.getChildren().addAll(vbLbl, exit);
+        vb.getChildren().addAll(vbLbl, bc, exit);
         
         exit.setOnAction(e -> { stage.close(); });
 
         VBox root = new VBox();
-        root.setSpacing(10);
+        root.setSpacing(20);
         root.getChildren().addAll(vb);
         
         Scene scene = new Scene(root);
@@ -219,6 +270,7 @@ public class GitHubAnalyzerGUI extends Application {
         stage.show();
     }
 
+    // Inicia a lista de repositórios com base no número de links válidos.
 	private void setAnalyzerList(File file, ArrayList<Analyzer> analyzer) {
 		try {
 			Scanner scanner  = new Scanner(file);
@@ -241,11 +293,10 @@ public class GitHubAnalyzerGUI extends Application {
 			urlList = urlListAux;
 		}
 		catch (FileNotFoundException e) {
-      		System.out.println("An error occurred.");
-      		e.printStackTrace();
     	}
 	}
 
+	// Pega o commit mais recente de todos repositórios.
 	private static Date getAllRepoMostRecentCommit(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getMostRecentCommit();
 
@@ -258,6 +309,7 @@ public class GitHubAnalyzerGUI extends Application {
 		return date;
 	}
 
+	// Pega o índice do commit mais recente de todos repositórios.
 	private static int getAllRepoMostRecentCommitIndex(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getMostRecentCommit();
 		int index = 0;
@@ -272,6 +324,7 @@ public class GitHubAnalyzerGUI extends Application {
 		return index;
 	}
 
+	// Pega o commit mais antigo de todos repositórios.
 	private static Date getAllRepoOldestCommit(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getOldestCommit();
 
@@ -284,6 +337,7 @@ public class GitHubAnalyzerGUI extends Application {
 		return date;
 	}
 
+	// Pega o índice do commit mais antigo de todos repositórios.
 	private static int getAllRepoOldestCommitIndex(ArrayList<Analyzer> analyzer) {
 		Date date = analyzer.get(0).getOldestCommit();
 		int index = 0;
@@ -298,6 +352,7 @@ public class GitHubAnalyzerGUI extends Application {
 		return index;
 	}
 
+	// Gera a list view dos repositórios com as urls e seus respectivos indices. 
 	private void setListView(ListView lv) {		
 		lv.getItems().clear();
 
@@ -346,7 +401,7 @@ public class GitHubAnalyzerGUI extends Application {
 // ---------------------------- Start ------------------------------
   	@Override
     public void start(final Stage primaryStage) {
-    	ArrayList<Analyzer> analyzer = new ArrayList<>();
+    	ArrayList<Analyzer> analyzer = new ArrayList<>(); // Lista de repositórios.
 
     	primaryStage.setTitle("GitHub Analyzer");
 
@@ -397,6 +452,7 @@ public class GitHubAnalyzerGUI extends Application {
 
 // ----------------------- Button Actions --------------------------
         
+        // Tratamento do MenuItem open, que retorna um arquivo para ser lido. 
         itemOpen.setOnAction(e -> { 
         	FileChooser fc = createFileChooser();
         	File selectedFile = fc.showOpenDialog(primaryStage);
@@ -407,13 +463,20 @@ public class GitHubAnalyzerGUI extends Application {
             	setAnalyzerList(selectedFile, analyzer);
             	setListView(listView);
 
+            	// O usuário só pode usar o commit analizer caso tenha carregado um arquivo
+            	// válido.
             	itemCommitAnalyzer.setDisable(false);
             }
         });
 
+        // Tratamento analisador de commits.
         itemCommitAnalyzer.setOnAction(e -> {
+        	// O item é desabilitado para que o usuário não tente acionar
+        	// multiplas vezes.
         	itemCommitAnalyzer.setDisable(true);
         	
+        	// Thread que processa as informações requisitadas pela api separadamente
+        	// da interface gráfica.
         	Thread t1 = new Thread(() -> {
         		for (int i=0 ; i<analyzer.size() ; i++) {
         			analyzer.get(i).setCommitList();
@@ -431,7 +494,8 @@ public class GitHubAnalyzerGUI extends Application {
 
         // Ação do botão exit, que fecha o estágio primário - encerrando o aplicativo.
         itemExit.setOnAction(e -> { primaryStage.close(); });
- 
+ 	
+ 		// Pega o índice do item selecionado pela ListView.
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -439,11 +503,17 @@ public class GitHubAnalyzerGUI extends Application {
 		    }
 		});
 
+        // Abre a janela que mostra informação do repositório selecionado.
+        // Só funciona caso o ultimo repositório tenha sido lido, ou seja,
+        // todos repositórios foram processados.
         btnRepoInfo.setOnAction(e -> {
         	if (analyzer.get(analyzer.size() - 1).wasRead())
         		showRepository(analyzer.get(listIndex));
         });
 
+        // Abre a janela que mostra a informação geral de todos repositórios,
+        // Só funciona caso o ultimo repositório tenha sido lido, ou seja,
+        // todos repositórios foram processados.
         btnGeneralInfo.setOnAction(e -> {
         	if (analyzer.get(analyzer.size() - 1).wasRead())
         		showGeneralInfo(analyzer);
@@ -459,6 +529,5 @@ public class GitHubAnalyzerGUI extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
 	}
 }
