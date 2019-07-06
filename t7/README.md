@@ -32,6 +32,8 @@ java -cp .:gson-2.8.5.jar GitHubAnalyzerCmd seu_arquivo.txt
 - [x] resto
 - [x] fazer a leitura dos dados a partir de uma thread separada
 - [x] Ver qual foi o commit mais recente e antigo
-- [ ] Controle de paginação da REST API
+- [x] Controle de paginação da REST API
 - [x] GitHubAnalyzerCmd
-- [ ] Personalizadas
+- [x] Personalizadas
+  - [x] Gráfico de barras (número de commits por repositório)
+  - [x] Informação detalhada de cada commit
